@@ -1,6 +1,7 @@
 #ifndef FILE_MGMT_H
 #define FILE_MGMT_H
 
+#include <stdint.h>
 #define MAGIC_IMAGE_FILE 0x00000803
 #define MAGIC_LABEL_FILE 0x00000801
 
@@ -9,24 +10,27 @@
  * */
 typedef struct 
 {
-	char cMagic[4];
-	int iNombreBitmaps;
-	int iLargeurBitmap;
-	int iHauteurBitmat;
+	uint32_t iMagic;
+	uint32_t iNombreBitmaps;
+	uint32_t iLargeurBitmap;
+	uint32_t iHauteurBitmat;
 } entete_image_t;
 /**
  * suivi de iNombreBitmaps * (iLargeurBitmap * iHauteurBitmap unsigned char);
+ */
+
+
 
 /**
  * Structure de l'entête du fichier d'étiquettes
  */
 typedef struct 
 {
-	char cMagic[4];
-	int iNombreBitmaps;
+	uint32_t iMagic;
+	uint32_t iNombreBitmaps;
 } entete_label_t;
 /**
- *  Suivi de iNombreBitmatps unsigned char contenant la valeur correspondant à l'étiquette (0-9)
+ *  Suivi de iNombreBitmaps unsigned char contenant la valeur correspondant à l'étiquette (0-9)
  */
 
 #endif
