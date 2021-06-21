@@ -1,4 +1,4 @@
-IDIR =
+IDIR = .
 CC=gcc
 CFLAGS=-I$(IDIR)
 
