@@ -6,28 +6,28 @@
 #include "Bitmap.h"
 
 /*
-* fonction qui lit un fichier d'entrées et place 
-* les images lues dans un tableau d'entrées
+* fonction qui lit un fichier d'entrÃ©es et place 
+* les images lues dans un tableau d'entrÃ©es
 * 
 	***** Fichiers des bitmaps (0x00000803) *****
-	-> Lire "clé magique" de 4 octets (0x00000803).
+	-> Lire "clÃ© magique" de 4 octets (0x00000803).
 	-> Lire "nombre bitmaps" : entier de 4 octets.
 		valant 60000 pour l'apprentissage et 10000 pour le test.
-	-> Lire "largeur bitmap" : entier de 4 octets, égal à 28.
-	-> Lire "hauteur bitmap" : entier de 4 octets, égal à 28.
+	-> Lire "largeur bitmap" : entier de 4 octets, Ã©gal Ã  28.
+	-> Lire "hauteur bitmap" : entier de 4 octets, Ã©gal Ã  28.
 	-> Lire n lignes (60000 pour les fichiers d'apprentissage, 10000 pour les tests)
-		chaque ligne contenant un bitmap de 28*28 = 784 octets non signés
+		chaque ligne contenant un bitmap de 28*28 = 784 octets non signÃ©s
 
 	***** Fichiers des labels (0x00000801) *****
-	-> Lire "clé magique" de 4 octets (0x00000801).
+	-> Lire "clÃ© magique" de 4 octets (0x00000801).
 	-> Lire "nombre bitmaps" : entier de 4 octets.
 		valant 60000 pour l'apprentissage et 10000 pour le test.
 	-> Lire n lignes (60000 pour les fichiers d'apprentissage, 10000 pour les tests)
-		chaque ligne contenant un label de 4 octets non signés
+		chaque ligne contenant un label de 4 octets non signï¿½s
 	*/
 long lireEntrees(char *ficEntrees, T_BITMAP *tabEntrees) {
 
-	//ouverture contrôlée du fichier, en lecture binaire
+	//ouverture contrÃ´lÃ©e du fichier, en lecture binaire
 	FILE* ficIn 
 		= fopen(ficEntrees, "rb");
 
@@ -36,7 +36,7 @@ long lireEntrees(char *ficEntrees, T_BITMAP *tabEntrees) {
 		exit(EXIT_FAILURE);
 	}//if
 
-	//Lecture et contrôle de la "clé magique"
+	//Lecture et contrÃ´le de la "clÃ© magique"
 	unsigned int cleMagique 
 		= lireEntier(TAILLE_BLOC, 1, ficIn);
 
@@ -48,19 +48,19 @@ long lireEntrees(char *ficEntrees, T_BITMAP *tabEntrees) {
 	}//if
 
 
-	//Lecture et contrôle du nombre de lignes à lire 
+	//Lecture et contrÃ´le du nombre de lignes ï¿½ lire 
 	unsigned int nbEntrees 
 		= lireEntier(TAILLE_BLOC, 1, ficIn);
 
 	if ( (nbEntrees != NB_ENTREES_APPR) 
 		&& (nbEntrees != NB_ENTREES_TEST) ) {
 		fprintf(stderr,
-			"Nombre de lignes à lire invalide : '%u'.\n"
+			"Nombre de lignes ï¿½ lire invalide : '%u'.\n"
 			, nbEntrees);
 		exit(EXIT_FAILURE);
 	}//if
 
-	//Si l'on est dans un fichier d'images, lire et contrôler 
+	//Si l'on est dans un fichier d'images, lire et contrÃ´ler 
 	//le nombre de lignes et colonnes de chaque image.
 	if (cleMagique == CLE_MAGIQUE_IMG) {
 		
@@ -86,12 +86,12 @@ long lireEntrees(char *ficEntrees, T_BITMAP *tabEntrees) {
 			exit(EXIT_FAILURE);
 		}//if
 
-		//remplissage du tableau d'entrées avec les pixels lus
+		//remplissage du tableau d'entrÃ©es avec les pixels lus
 		for (unsigned int numEntree = 0; numEntree < nbEntrees; numEntree++) {
 			for (unsigned int ligne = 0; ligne < NB_LIGNES_BMP; ligne++) {
 				for (unsigned int colonne = 0; colonne < NB_COLONNES_BMP; colonne++) {
 
-					//Lecture d'une entrée de 1 octets 
+					//Lecture d'une entrÃ©e de 1 octets 
 					if (fread(&(tabEntrees[numEntree]).pixels[ligne][colonne]
 						, 1, 1, ficIn) != 1) {
 						perror("Erreur de lecture de pixel (octet) dans le fichier d'entree.");
@@ -104,10 +104,10 @@ long lireEntrees(char *ficEntrees, T_BITMAP *tabEntrees) {
 
 	} else {//on n'est donc pas dans un fichier d'images, donc dans un fichier de labels
 
-		//remplissage du tableau d'entrées avec les labels lus
+		//remplissage du tableau d'entrÃ©es avec les labels lus
 		for (unsigned int numEntree = 0; numEntree < nbEntrees; numEntree++) {
 			
-			//Lecture d'une entrée de 1 octets 
+			//Lecture d'une entrÃ©e de 1 octets 
 			if (fread(&(tabEntrees[numEntree]).label
 				, 1, 1, ficIn) != 1) {
 				perror("Erreur de lecture de label (octet) dans le fichier d'entree.");
@@ -120,7 +120,7 @@ long lireEntrees(char *ficEntrees, T_BITMAP *tabEntrees) {
 	
 
 
-	//fermeture du fichier d'entrées
+	//fermeture du fichier d'entrÃ©es
 	fclose(ficIn);
 
 	return nbEntrees;
@@ -130,11 +130,11 @@ long lireEntrees(char *ficEntrees, T_BITMAP *tabEntrees) {
  
 void afficherEntree(T_BITMAP *elem, char afficherProba, T_LABEL label) {
 
-	//chaine de caractères correspondante au champ de classification
+	//chaine de caractÃ¨res correspondante au champ de classification
 	char strLabel[40] = "";
 	strcpy(strLabel, getStrLabel(elem->label));
 
-	//affichage de l'entrée
+	//affichage de l'entrÃ©e
 	printf(
 		" Reel: [%s] "
 		, strLabel
@@ -196,7 +196,7 @@ void afficherTabEntrees(T_BITMAP *tabEntrees, long nbEntrees
 
 	printf("\n");
 
-	//parcours du tableau d'entrées
+	//parcours du tableau d'entrÃ©es
 	for (long i = 0;
 		//(i < MAX_NB_LIGNES_FICIN) && (tabEntrees[i].largPetale > 0); i++) {
 		(i < nbEntrees) /* && (tabEntrees[i].largPetale > 0) */ ; i++) {//REVOIR CONDITION ICI
@@ -207,7 +207,7 @@ void afficherTabEntrees(T_BITMAP *tabEntrees, long nbEntrees
 }//affichertabEntrees()
 
 //fonction qui renvoie la constante de type T_LABEL
-//en fonction de l'entier entrée en paramètre.
+//en fonction de l'entier entrÃ©e en paramÃ¨tre.
 T_LABEL getLabel(long numLabel) {
 
 	switch (numLabel) {
@@ -228,8 +228,8 @@ T_LABEL getLabel(long numLabel) {
 
 
 //Fonction utilitaire, qui permet d'obtenir une correspondance
-//entre un numéro de label et une chaine de caractère.
-//Peut servir pour réaliser de l'affichage.
+//entre un numÃ©ro de label et une chaine de caractÃ¨re.
+//Peut servir pour rÃ©aliser de l'affichage.
 const char* getStrLabel(T_LABEL label) {
 	
 	char strLabel[40] = "";
