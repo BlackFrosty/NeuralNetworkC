@@ -22,4 +22,4 @@ add_executable(NeuralNetworkC
         src/Statistiques.c
         src/Statistiques.h
         src/Util.c
-        src/Util.h src/structures.h src/main.c)
+        src/Util.h src/structures.h src/main.c src/structures.c)
