@@ -31,13 +31,13 @@ typedef struct {
 } T_COUCHE;
 
 /**
- * T_PMC
+ * T_RSO
  */
 
 typedef struct
 {
     T_COUCHE * pCouche;
     uint8_t ui8NbCouches;
-} T_PMC;
+} T_RSO;
 
 #endif //NEURALNETWORKC_STRUCTURES_H
