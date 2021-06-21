@@ -18,6 +18,7 @@ OBJ = main.o Bitmap.o Couche.o Iris.o Neurone.o PMC.o Statistiques.o Util.o
 
 rso-mnist: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+	cp rso-mnist ..
 
 .PHONY: clean
 
