@@ -40,4 +40,19 @@ typedef struct
     uint8_t ui8NbCouches;
 } T_RSO;
 
+typedef enum
+{
+    ZERO, UN, DEUX, TROIS, QUATRE, CINQ, SIX, SEPT, HUIT, NEUF, INCONNU=255
+} enumLabel;
+
+typedef struct
+{
+    enumLabel label;
+    double ** pTabPixel;
+    uint8_t ui8Largeur;
+    uint8_t ui8Longueur;
+} T_BITMAP;
+
+
+
 #endif //NEURALNETWORKC_STRUCTURES_H
