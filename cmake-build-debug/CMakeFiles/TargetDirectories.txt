@@ -1,0 +1,3 @@
+/home/user/prog/NeuralNetworkC/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/user/prog/NeuralNetworkC/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/user/prog/NeuralNetworkC/cmake-build-debug/CMakeFiles/NeuralNetworkC.dir
