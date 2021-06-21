@@ -9,4 +9,5 @@ add_executable(rso-mnist
         src/main.c
         src/Util.c
         src/Util.h src/structures.h src/main.c src/structures.c
-        src/Calculs.c src/Calculs.h)
+        src/Calculs.c src/Calculs.h
+        src/FunctionsIO.c src/FunctionsIO.h)
