@@ -16,7 +16,7 @@ Util.c Util.h \
 fonctionsRso.c fonctionsRso.h
 
 
-OBJ = main.o structures.o FunctionsIO.o Calcul.o rso_neurones.o Util.o FunctionsRso.o
+OBJ = main.o structures.o functionsIO.o Calcul.o rso_neurones.o Util.o FunctionsRso.o
 
 
 %.o: %.c $(DEPS)
