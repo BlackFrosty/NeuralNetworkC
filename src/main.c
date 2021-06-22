@@ -6,5 +6,6 @@
 
 int main(int argc, char ** argv)
 {
-
+  MaxPooling (readImageFile() ; NB_ELEMENTS_BMP);
+  
 }
