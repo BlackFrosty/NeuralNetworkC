@@ -7,10 +7,16 @@ LDIR =../lib
 
 LIBS=-lm
 
-DEPS = main.c structures.c structures.h FunctionsIO.c FunctionsIO.h Calcul.c Calcul.h rso_neurones.h rso_neruones.c Util.c Util.h
+DEPS = main.c \
+structures.c structures.h \
+functionsIO.c functionsIO.h \
+calcul.c calcul.h \
+rso_neurones.h rso_neurones.c \
+Util.c Util.h \
+fonctionsRso.c fonctionsRso.h
 
 
-OBJ = main.o structures.o FunctionsIO.o Calcul.o rso_neurones.o Util.o
+OBJ = main.o structures.o FunctionsIO.o Calcul.o rso_neurones.o Util.o FunctionsRso.o
 
 
 %.o: %.c $(DEPS)
@@ -26,4 +32,4 @@ rso-mini: main.o structures.o
 .PHONY: clean
 
 clean:
-	rm -f *.o *~ core 
+	rm -f *.o *~ core a.out

@@ -1,6 +1,5 @@
 //
-//  Calculs.c
-//  Calculs
+//  calculs.c
 //
 //  Created by Maskott on 21/06/2021.
 //
@@ -18,8 +17,8 @@
 /*     INCLUDE PERSONNELS   - prototypes       */
 /*---------------------------------------------*/
 
-#include "Calculs.h"
-#include "Structures.h"
+#include "calculs.h"
+#include "structures.h"
 
 
 
@@ -51,8 +50,7 @@ double moyennePonderee(T_NEURONE *neurone, double tabEntrees[MAX_NB_DENDRITES]) 
     double moyennePonderee = 0;
 
     //pour chaque dendrite
-    for (long numDendrite = 0 ;
-        (numDendrite < MAX_NB_DENDRITES) && (numDendrite < neurone->ui16NbDendrites) ; numDendrite++) {
+    for (uint16_t numDendrite = 0 ; (numDendrite < MAX_NB_DENDRITES) && (numDendrite < neurone->ui16NbDendrites) ; numDendrite++) {
 
         moyennePonderee +=  tabEntrees[numDendrite] * neurone->pdPoids[numDendrite];
     }
@@ -93,7 +91,7 @@ double derivSigmoide( double dSigmox ){
 
 double sommeExpProba( T_COUCHE * coucheSortie ){
     double dSommeExp = 0 ;
-    for ( int i = 0 ; i < coucheSortie->ui16NbNeurones ; i++ ){
+    for ( uint8_t i = 0 ; i < coucheSortie->ui16NbNeurones ; i++ ){
         dSommeExp += exp( (coucheSortie->pNeur[i]).dValeurSortie ) ;
     }
     return dSommeExp ;
@@ -107,7 +105,7 @@ double sommeExpProba( T_COUCHE * coucheSortie ){
 /*---------------------------------------------------------------------------------------------------------*/
 
 void softmax( T_COUCHE * coucheSortie, double dSeommeExp ){
-    for ( int i = 0 ; i < coucheSortie->ui16NbNeurones ; i ++ ){
+    for ( uint8_t i = 0 ; i < coucheSortie->ui16NbNeurones ; i ++ ){
         (coucheSortie->pNeur[i]).dValeurSortie = exp( (coucheSortie->pNeur[i]).dValeurSortie ) / dSeommeExp ;
     }
 }
