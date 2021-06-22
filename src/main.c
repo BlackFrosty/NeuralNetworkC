@@ -6,6 +6,8 @@
 
 int main(int argc, char ** argv)
 {
-  MaxPooling (readImageFile() ; NB_ELEMENTS_BMP);
+  static double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP] ;
+  adTabPixel = (readImageFile() ; NB_ELEMENTS_BMP); 
+  MaxPooling (adTabPixel);
   
 }
