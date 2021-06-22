@@ -23,6 +23,7 @@
  */
 
 typedef struct T_NEURONE {
+    /* tableau de poids */
     double ** pdPoids;
     uint16_t ui16NbDendrites;
     double dValeurSortie;
@@ -35,6 +36,7 @@ typedef struct T_NEURONE {
  * T_COUCHE
  */
 typedef struct T_COUCHE {
+    /* tableau de neurones */
     T_NEURONE ** pNeur;
     uint16_t ui16NbNeurones;
 } T_COUCHE;
@@ -45,6 +47,7 @@ typedef struct T_COUCHE {
 
 typedef struct T_RSO
 {
+    /* tableau de couches */
     T_COUCHE ** pCouche;
     uint8_t ui8NbCouches;
 } T_RSO;
