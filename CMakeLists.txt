@@ -7,9 +7,9 @@ include_directories(src)
 
 add_executable(rso-mnist
         src/main.c
-        src/Util.c
-        src/Util.h src/structures.h src/main.c src/structures.c
+        src/Util.c src/Util.h
+        src/structures.h src/structures.c
         src/Calculs.c src/Calculs.h
         src/Util.c src/Util.h
         src/functionsIO.c src/functionsIO.h
-        FunctionsRso.c FunctionsRso.h)
+        src/fonctionsRso.c src/fonctionsRso.h)
