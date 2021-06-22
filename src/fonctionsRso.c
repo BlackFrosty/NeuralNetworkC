@@ -106,7 +106,7 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
     // recuperation des valeurs de sortie de la couche cachee en tant qu entree de la couche de sortie
     dTabEntree[0] = 0 ;
     for ( uint8_t cpt = 0 ; cpt < coucheCachee->ui16NbNeurones ; cpt++ ){
-        dTabEntree[cpt] = coucheCachee->pNeur->dValeurSortie ;
+        dTabEntree[cpt] = coucheCachee->pNeur[cpt].dValeurSortie ;
     }
 
     for ( uint8_t cptNeurone = 0 ; cptNeurone < coucheSortie->ui16NbNeurones ; cptNeurone++ ){
@@ -124,6 +124,6 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
 /*---------------------------------------------------------------------------------------------------------*/
 void afficherProbaCouche( T_COUCHE * couche ){
     for ( uint8_t cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
-        printf("Probabilite clculee par le neurone %d : %.4f", cpt, couche->pNeur->dValeurSortie ) ;
+        printf("Probabilite clculee par le neurone %d : %.4f", cpt, couche->pNeur[cpt].dValeurSortie ) ;
     }
 }
