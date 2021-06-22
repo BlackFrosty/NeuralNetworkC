@@ -41,7 +41,7 @@
 
 void propager( T_RSO * reseau, double dTabEntree[] ){
     
-    long int cpt ;
+    uint32_t cpt ;
     double dTabEntreeUnitaire [170] ;
     
     // recuperation des pointeurs vers les couches cachee et sortie
@@ -54,7 +54,7 @@ void propager( T_RSO * reseau, double dTabEntree[] ){
         // recuperation 1 par 1 des bitmaps : 1 + 169 pixels
         dTabEntreeUnitaire[0] = 1.0 ;
         
-        for ( int j = 1 ; j < 170 ; j++ ){
+        for ( uint16_t j = 1 ; j < 170 ; j++ ){
             dTabEntreeUnitaire[j] = dTabEntree[ 169 * cpt + j] ;
         }
         
@@ -86,7 +86,7 @@ void propager( T_RSO * reseau, double dTabEntree[] ){
 
 void calculerProbaCoucheCahee( T_COUCHE *coucheCachee, double dTabEntree[] ){
     
-    for ( int cptNeurone = 0 ; cptNeurone < coucheCachee->ui16NbNeurones ; cptNeurone++ ){
+    for ( uint16_t cptNeurone = 0 ; cptNeurone < coucheCachee->ui16NbNeurones ; cptNeurone++ ){
         calculerProbaNeurone( &coucheCachee->pNeur[cptNeurone], dTabEntree ) ;
     }
     
@@ -105,11 +105,11 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
     
     // recuperation des valeurs de sortie de la couche cachee en tant qu entree de la couche de sortie
     dTabEntree[0] = 0 ;
-    for ( int cpt = 0 ; cpt < coucheCachee->ui16NbNeurones ; cpt++ ){
-        dTabEntree[cpt] = coucheCachee->pNeur->dValeurSortie ;
+    for ( uint8_t cpt = 0 ; cpt < coucheCachee->ui16NbNeurones ; cpt++ ){
+        dTabEntree[cpt] = coucheCachee->pNeur[cpt].dValeurSortie ;
     }
 
-    for ( int cptNeurone = 0 ; cptNeurone < coucheSortie->ui16NbNeurones ; cptNeurone++ ){
+    for ( uint8_t cptNeurone = 0 ; cptNeurone < coucheSortie->ui16NbNeurones ; cptNeurone++ ){
         calculerProbaNeurone( &coucheSortie->pNeur[cptNeurone], dTabEntree ) ;
     }
     
@@ -123,7 +123,7 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
 /* Sortie :                                                                                                */
 /*---------------------------------------------------------------------------------------------------------*/
 void afficherProbaCouche( T_COUCHE * couche ){
-    for ( int cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
-        printf("Probabilite clculee par le neurone %d : %.4f", cpt, couche->pNeur->dValeurSortie ) ;
+    for ( uint8_t cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
+        printf("Probabilite clculee par le neurone %d : %.4f", cpt, couche->pNeur[cpt].dValeurSortie ) ;
     }
 }
