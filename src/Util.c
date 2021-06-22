@@ -53,7 +53,7 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
     for (  int numCouche = 1 ; numCouche < pReseau->ui8NbCouches ; numCouche++ ) {
 
         //pointeur vers la couche courante
-        T_COUCHE * couche = pReseau->pCouche[numCouche];
+        T_COUCHE * couche = &pReseau->pCouche[numCouche];
 
          //pour chaque neurone de la couche courante  
         for (  int numNeurone = 0 ; (numNeurone < couche[numCouche].ui16NbNeurones)
@@ -61,13 +61,13 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
                  numCouche++ ) {//pour chaque neurone de la couche
 
             //pointeur vers le neurone courant
-            T_NEURONE * neurone = couche->pNeur[numNeurone];
+            T_NEURONE * neurone = &couche->pNeur[numNeurone];
 
             //pour chaque case de poids du neurone courant
             for( int numPoids = 0; numPoids < neurone->ui16NbDendrites ; numPoids++, cptValLues++) {
 
                 //tentative de lecture d'un poids et d'affection du poids lu dans le tableau de poids du neurone courant
-                 if (sscanf(ligne, "%lf", neurone->pdPoids[numPoids]) != 1) {
+                 if (sscanf(ligne, "%lf", &neurone->pdPoids[numPoids]) != 1) {
 
                     fprintf(stderr, "Impossible de lire le poids à la ligne %d.\n", cptValLues);
 		            exit(EXIT_FAILURE);
