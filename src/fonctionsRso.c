@@ -27,9 +27,9 @@
 /*     INCLUDE PERSONNELS   - prototypes       */
 /*---------------------------------------------*/
 
-#include "Calculs.h"
-#include "Structures.h"
-#include "FonctionsRso.h"
+#include "calculs.h"
+#include "structures.h"
+#include "fonctionsRso.h"
 
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -72,7 +72,8 @@ void propager( T_RSO * reseau, double dTabEntree[] ){
         softmax( coucheSortie, dSommeExp) ;
         
         
-        // Afficher
+        afficherProbaCouche(coucheSortie) ;
+        
     }
 }
 
@@ -115,3 +116,14 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
 }
 
 
+/*---------------------------------------------------------------------------------------------------------*/
+/*  afficherProbaCouche                                                                                    */
+/* Fonction : affiche les poba calculee par les neurones sur une couche                                    */
+/* Entree :  pointeur vers la couche                                                                       */
+/* Sortie :                                                                                                */
+/*---------------------------------------------------------------------------------------------------------*/
+void afficherProbaCouche( T_COUCHE * couche ){
+    for ( int cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
+        printf("Probabilite clculee par le neurone %d : %.4f", cpt, couche->pNeur->dValeurSortie ) ;
+    }
+}

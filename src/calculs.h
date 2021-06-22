@@ -1,12 +1,11 @@
 //
-//  Calculs.h
-//  Calculs
+//  calculs.h
 //
 //  Created by Maskott on 21/06/2021.
 //
 
-#ifndef Calculs_h
-#define Calculs_h
+#ifndef calculs_h
+#define calculs_h
 
 /*---------------------------------------------*/
 /*             INCLUDE LANGAGE C               */
@@ -19,7 +18,7 @@
 /*     INCLUDE PERSONNELS   - prototypes       */
 /*---------------------------------------------*/
 
-#include "Structures.h"
+#include "structures.h"
 
 #define MAX_NB_DENDRITES 785
 
@@ -31,4 +30,4 @@ double derivSigmoide( double ) ;
 double sommeExpProba( T_COUCHE * ) ;
 void softmax( T_COUCHE *, double ) ;
 
-#endif /* Calculs_h */
+#endif /* calculs_h */

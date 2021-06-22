@@ -1,6 +1,5 @@
 //
-//  Calculs.c
-//  Calculs
+//  calculs.c
 //
 //  Created by Maskott on 21/06/2021.
 //
@@ -18,8 +17,8 @@
 /*     INCLUDE PERSONNELS   - prototypes       */
 /*---------------------------------------------*/
 
-#include "Calculs.h"
-#include "Structures.h"
+#include "calculs.h"
+#include "structures.h"
 
 
 
