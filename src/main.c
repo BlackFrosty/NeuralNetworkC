@@ -7,8 +7,11 @@
 
 int main(int argc, char ** argv)
 {
-  static double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP] ;
-  //adTabPixel = readImageFile("../data/numbers/train-images-idx3-ubyte"); 
-  //MaxPooling (adTabPixel, NB_ELEMENTS_BMP);
-  
+      static double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP] ;
+      T_RSO * pReseau;
+      //adTabPixel = readImageFile("../data/numbers/train-images-idx3-ubyte");
+      //MaxPooling (adTabPixel, NB_ELEMENTS_BMP);
+
+      pReseau = init_rso_neurones(NB_COUCHES);
+      
 }
