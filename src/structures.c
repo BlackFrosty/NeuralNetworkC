@@ -2,13 +2,16 @@
 // Created by tmdt2021 on 21/06/2021.
 //
 
+#include <stdio.h>
 #include <stdlib.h> // calloc,malloc,free
 #include "structures.h"
 
 void * instancie_neurone(uint16_t ui16NbDendrites)
 {
     T_NEURONE* pNeur ; // = calloc(1, sizeof(T_NEURONE));
+    printf("Neurone av : %p\n", pNeur->pdPoids);
     pNeur->pdPoids = calloc(ui16NbDendrites, sizeof(double ));
+    printf("Neurone ap : %p\n", pNeur->pdPoids);
     pNeur->ui16NbDendrites = ui16NbDendrites;
     return pNeur;
 }
@@ -79,14 +82,18 @@ void libere_cascade(T_RSO *pRso)
 T_RSO * init_rso_neurones(uint8_t ui8NbCouches)
 {
     T_RSO * pReseau ;
+    /* instanciation du réseau */
     pReseau = instancie_rso((ui8NbCouches));
 
+    /* instanciation des couches */
     pReseau->pCouche[0] = instancie_couche(NB_NEURONES_COUCHE_1);
+    /* instanciation différenciée de la couche 0 */
     for (uint16_t i = 0 ; i < pReseau->pCouche[0]->ui16NbNeurones; i++)
     {
         pReseau->pCouche[0]->pNeur[i] = instancie_neurone(NB_DENDRITES_INIT);
     }
     pReseau->pCouche[1] = instancie_couche(NB_NEURONES_COUCHE_2);
+    /* instanciation différenciée de la couche 1 */
     for (uint16_t i = 0 ; i < pReseau->pCouche[1]->ui16NbNeurones; i++)
     {
         pReseau->pCouche[1]->pNeur[i] = instancie_neurone(NB_NEURONES_COUCHE_1);
