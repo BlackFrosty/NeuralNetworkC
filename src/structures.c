@@ -64,8 +64,7 @@ void libere_cascade(T_RSO *pRso)
         {
             libere_neurone(pRso->pCouche[iNbC]->pNeur[iNbN]);
         }
-
+        libere_couche(iNbN < pRso->pCouche[iNbC]);
     }
-
     //libere_rso(pRso)
 }
