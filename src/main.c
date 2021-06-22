@@ -3,6 +3,7 @@
 //
 
 #include "structures.h"
+#include "FunctionsIO.h"
 
 int main(int argc, char ** argv)
 {
