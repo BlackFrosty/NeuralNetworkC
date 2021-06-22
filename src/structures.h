@@ -69,7 +69,7 @@ void libere_couche(T_COUCHE * );
 void * instancie_rso(uint8_t ui8NbCouches);
 void libere_rso(T_RSO * rso);
 void libere_cascade(T_RSO *pRso);
-void init_rso_neurones(uint8_t ui8NbCouches);
+T_RSO * init_rso_neurones(uint8_t ui8NbCouches);
 
 
 #endif //NEURALNETWORKC_STRUCTURES_H

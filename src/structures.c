@@ -23,8 +23,8 @@ void libere_neurone(T_NEURONE * pNeur)
 
 void * instancie_couche(uint16_t ui16NbNeurones)
 {
-    //T_COUCHE* pCouche = calloc(1, sizeof(T_COUCHE));
     T_COUCHE * pCouche ;
+    pCouche = calloc(1, sizeof(T_COUCHE));
     pCouche->ui16NbNeurones = ui16NbNeurones;
     pCouche->pNeur = calloc(pCouche->ui16NbNeurones, sizeof(T_NEURONE));
     return pCouche;
@@ -76,7 +76,7 @@ void libere_cascade(T_RSO *pRso)
  * @param ui8NbCouches
  *
  */
-void init_rso_neurones(uint8_t ui8NbCouches)
+T_RSO * init_rso_neurones(uint8_t ui8NbCouches)
 {
     T_RSO * pReseau ;
     pReseau = instancie_rso((ui8NbCouches));
@@ -91,5 +91,6 @@ void init_rso_neurones(uint8_t ui8NbCouches)
     {
         pReseau->pCouche[1]->pNeur[i] = instancie_neurone(NB_NEURONES_COUCHE_1);
     }
+    return pReseau;
 }
 
