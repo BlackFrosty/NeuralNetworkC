@@ -94,15 +94,10 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint8_t * pui8NbBitmaps, uint8_
                 }
             }
         }
-        //Apply MaxPooling on each image if needed.
-        if (bMaxPooling) { 
-            pImageBuffer = MaxPooling(pImageBuffer);
-        }
-        
-        //Store image in TabPixel of pstrBitmap structure.
-        pstrBitmaps[ui8ImagePosition] = pImageBuffer;
+        //Apply MaxPooling on each image if needed or store imagebuffer.
+        if (bMaxPooling)    { MaxPooling(pImageBuffer, pstrBitmaps[ui8ImagePosition]); }
+        else                { pstrBitmaps[ui8ImagePosition] = pImageBuffer; } 
     }
-
     //fermeture du fichier d'entrées
 	fclose(fpImageFD);
 
