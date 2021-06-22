@@ -6,7 +6,7 @@
 #include <stdlib.h> // calloc,malloc,free
 #include "structures.h"
 
-void * instancie_neurone(uint16_t ui16NbDendrites)
+T_NEURONE * instancie_neurone(uint16_t ui16NbDendrites)
 {
     T_NEURONE* pNeur ; // = calloc(1, sizeof(T_NEURONE));
     printf("Neurone av : %p\n", pNeur->pdPoids);
@@ -24,7 +24,7 @@ void libere_neurone(T_NEURONE * pNeur)
     //pNeur = NULL;
 }
 
-void * instancie_couche(uint16_t ui16NbNeurones)
+T_COUCHE * instancie_couche(uint16_t ui16NbNeurones)
 {
     T_COUCHE * pCouche ;
     pCouche = calloc(1, sizeof(T_COUCHE));
@@ -38,9 +38,6 @@ void libere_couche(T_COUCHE * pCouche)
     free(pCouche->pNeur);
     pCouche->pNeur = NULL;
 }
-
-
-
 
 void * instancie_rso(uint8_t ui8NbCouches)
 {
