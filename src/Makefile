@@ -19,6 +19,10 @@ OBJ = main.o structures.o FunctionsIO.o Calcul.o rso_neurones.o Util.o
 rso-mnist: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
+rso-mini: main.o structures.o
+	$(CC) -o rso $^ $(CFLAGS) $(LIBS)
+
+
 .PHONY: clean
 
 clean:
