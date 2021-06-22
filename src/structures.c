@@ -71,6 +71,11 @@ void libere_cascade(T_RSO *pRso)
     //libere_rso(pRso)
 }
 
+/**
+ * init_rso_neurones : crée statiquement le réseau de neurones
+ * @param ui8NbCouches
+ *
+ */
 void init_rso_neurones(uint8_t ui8NbCouches)
 {
     T_RSO * pReseau ;
