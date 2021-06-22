@@ -22,6 +22,44 @@
 #include "Structures.h"
 
 
+
+
+/*--------------------------------------------------------------------------------------*/
+/*  calculerProbaNeurone                                                                */
+/* Fonction : calcul de la probabilité pour un neurone                                  */
+/* Entree :  un pointeur vers un neuronne, le tableau des valeurs d entree du neurone   */
+/* Sortie :  la probabilite calculee par le neuronne                                    */
+/*--------------------------------------------------------------------------------------*/
+
+void calculerProbaNeurone(T_NEURONE *neurone, double tabEntrees [MAX_NB_DENDRITES]) {
+    
+    //mise à jour de la valeur de sortie du neurone
+    neurone->dValeurSortie = sigmoide(moyennePonderee(neurone, tabEntrees));
+
+}
+
+/*--------------------------------------------------------------------------------------*/
+/*  moyennePonderee                                                                     */
+/* Fonction : fonctgion d agregation de type moyenne ponderee                           */
+/* Entree :  un pointeur vers un neuronne, le tableau des valeurs d entree du neurone   */
+/* Sortie :  la moyenne ponderee de ces entrees                                         */
+/* avant le calcul de la sigmoide par le neurone                                        */
+/*--------------------------------------------------------------------------------------*/
+
+double moyennePonderee(T_NEURONE *neurone, double tabEntrees[MAX_NB_DENDRITES]) {
+    
+    double moyennePonderee = 0;
+
+    //pour chaque dendrite
+    for (long numDendrite = 0 ;
+        (numDendrite < MAX_NB_DENDRITES) && (numDendrite < neurone->ui16NbDendrites) ; numDendrite++) {
+
+        moyennePonderee +=  tabEntrees[numDendrite] * neurone->pdPoids[numDendrite];
+    }
+
+    return moyennePonderee;
+}
+
 /*-----------------------------------------------------------------*/
 /*  sigmoide                                                       */
 /* Fonction : calcule la sigmoide de x                             */
