@@ -10,10 +10,10 @@ LIBS=-lm
 DEPS = main.c \
 structures.c structures.h \
 functionsIO.c functionsIO.h \
-Calcul.c Calcul.h \
+calcul.c calcul.h \
 rso_neurones.h rso_neurones.c \
 Util.c Util.h \
-FunctionsRso.c FunctionsRso.h
+fonctionsRso.c fonctionsRso.h
 
 
 OBJ = main.o structures.o FunctionsIO.o Calcul.o rso_neurones.o Util.o FunctionsRso.o
