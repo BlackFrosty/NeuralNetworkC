@@ -26,4 +26,4 @@ rso-mini: main.o structures.o
 .PHONY: clean
 
 clean:
-	rm -f *.o *~ core 
+	rm -f *.o *~ core a.out
