@@ -5,11 +5,10 @@ uint8_t     swapEndians (uint8_t ui8num) {
     //register suggests the system to use register as a memory instead of RAM
     //shift and filter to swap all 4 bytes
     register uint8_t result = ( ((ui8num >> 24) & 0xff) | ((ui8num << 8) & 0xff0000) | ((ui8num >> 8) & 0xff00) | ((ui8num << 24) & 0xff000000) );
-
     return result;
 }
 
-//
+//Check MagicNumber with given number
 uint8_t     checkMagicNumber (FILE * fpImageFD, uint8_t ui8MagicNumber ) {
     //
     uint8_t ui8res = 0;
@@ -19,7 +18,7 @@ uint8_t     checkMagicNumber (FILE * fpImageFD, uint8_t ui8MagicNumber ) {
     }
     ui8res = swapEndians (ui8res);
     
-    //
+    //Check with provided Magic Number
     if (ui8res == ui8MagicNumber) {return 1;}
     return 0;
 }
@@ -35,8 +34,9 @@ FILE*       openFile (char * pcFileLocation) {
 	}
 }
 
-T_BITMAP    readImageFile(char * pcFileLocation, uint8_t bMaxPooling) {
-    //Read Image file
+//
+T_BITMAP*   readImageFile(char * pcFileLocation, uint8_t * pui8NbBitmaps, uint8_t * pui8LargeurBitmapFinal, uint8_t * pui8HauteurBitmapFinal, uint8_t bMaxPooling) {
+    //Open Image file
     FILE * fpImageFD = openFile(pcFileLocation);
     
     //Lecture et contrôle de la "clé" magique
@@ -46,12 +46,11 @@ T_BITMAP    readImageFile(char * pcFileLocation, uint8_t bMaxPooling) {
     }
     
     //Lecture et sauvegarde du nombre de bitmaps
-    uint8_t ui8NbBitmaps = 0;
-    if (fread(&ui8NbBitmaps, 4, 1, fpImageFD) != 1) {
+    if (fread(pui8NbBitmaps, 4, 1, fpImageFD) != 1) {
         perror("Erreur : le nombre de bitmaps n'est pas lisible.");
         exit(EXIT_FAILURE);
     }
-    ui8NbBitmaps = swapEndians(ui8NbBitmaps);
+    * pui8NbBitmaps = swapEndians(* pui8NbBitmaps);
 
     //Lecture et sauvegarde de la largeur des images
 	uint8_t ui8LargeurBitmap = 0;
@@ -60,6 +59,8 @@ T_BITMAP    readImageFile(char * pcFileLocation, uint8_t bMaxPooling) {
         exit(EXIT_FAILURE);
     }
     ui8LargeurBitmap = swapEndians(ui8LargeurBitmap);
+    if (bMaxPooling)    { * pui8LargeurBitmapFinal = 13; }
+    else                { * pui8LargeurBitmapFinal = ui8LargeurBitmap; }
     
     //Lecture et sauvegarde de la heuteur des images
 	uint8_t ui8HauteurBitmap = 0;
@@ -68,34 +69,47 @@ T_BITMAP    readImageFile(char * pcFileLocation, uint8_t bMaxPooling) {
         exit(EXIT_FAILURE);
     }
     ui8HauteurBitmap = swapEndians(ui8HauteurBitmap);
-    
-    //initialiser la structure à rendre (type T_BITMAP) et les variables de hauteur/largeur
-    static T_BITMAP pstrBitmap = instancie_bitmap(ui8NbBitmaps, ui8LargeurBitmap, ui8HauteurBitmap, bMaxPooling);
+    if (bMaxPooling)    { * pui8HauteurBitmapFinal = 13; }
+    else                { * pui8HauteurBitmapFinal = ui8LargeurBitmap; }
 
-    for (uint8_t ui8ImagePosition = 0; ui8ImagePosition < ui8NbBitmaps; ui8ImagePosition++) {
-        //remplissage du tableau pTabPixel avec les pixels lus
-        double ** pImage = (double **) malloc (ui8LargeurBitmap * ui8HauteurBitmap * sizeof(double));
-        for (uint8_t ui8Row = 0; ui8Row < ui8HauteurBitmap; ui8Row++) {
-            for (uint8_t ui8Column = 0; ui8Column < ui8LargeurBitmap; ui8Column++) {
+    //initialiser la structure à rendre (type T_BITMAP) et les variables de hauteur/largeur
+    T_BITMAP * pstrBitmaps[* pui8NbBitmaps];
+    for (uint8_t ui8BitmapPosition = 0; ui8BitmapPosition < (* pui8NbBitmaps); ui8BitmapPosition++) {
+        pstrBitmaps[ui8BitmapPosition] = (T_BITMAP) malloc (sizeof(T_BITMAP));
+        pstrBitmaps[ui8BitmapPosition] = instancie_bitmap(* pui8LargeurBitmapFinal, * pui8HauteurBitmapFinal, 255);
+    }
+
+    //Parcourir l'image
+    for (uint8_t ui8ImagePosition = 0; ui8ImagePosition < (* pui8NbBitmaps); ui8ImagePosition++) {
+        //initialize pImageBuffer
+        double ** pImageBuffer = (double **) malloc ((* pui8LargeurBitmap) * (* pui8HauteurBitmap) * sizeof(double));
+        
+        //remplissage du tableau pImageBuffer avec chaque pixels lu       
+        for (uint8_t ui8Row = 0; ui8Row < (* pui8HauteurBitmap); ui8Row++) {
+            for (uint8_t ui8Column = 0; ui8Column < (* pui8LargeurBitmap); ui8Column++) {
                 //Lecture d'une entrée de 1 octets 
-                if (fread(&pImage[ui8Row][ui8Column], 1, 1, fpImageFD) != 1) {
+                if (fread(&pImageBuffer[ui8Row][ui8Column], 1, 1, fpImageFD) != 1) {
                     perror("Erreur : La lecture d'un pixel (octet) dans le fichier d'entree a échoué.");
                     exit(EXIT_FAILURE);
                 }
             }
         }
+        //Apply MaxPooling on each image if needed.
+        if (bMaxPooling) { 
+            pImageBuffer = MaxPooling(pImageBuffer);
+        }
         
-        pImage = MaxPooling(pImage, ui8LargeurBitmap);
-        pstrBitmap->pTabPixel[ui8ImagePosition] = pImage;
+        //Store image in TabPixel of pstrBitmap structure.
+        pstrBitmaps[ui8ImagePosition] = pImageBuffer;
     }
 
     //fermeture du fichier d'entrées
 	fclose(fpImageFD);
 
-    return pstrBitmap ;
+    return pstrBitmaps ;
 }
 
-void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap) {
+void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint8_t * pui8NbBitmaps) {
     //Read Image file
     FILE * fpImageFD = openFile(pcFileLocation);
     
@@ -112,4 +126,13 @@ void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap) {
         exit(EXIT_FAILURE);
     }
     ui8NbLabels = swapEndians(ui8NbLabels);
+
+    //Check if number of labels equals number of images
+    if ((* pui8NbBitmaps) != ui8NbLabels) {
+        perror("Erreur : le nombre de labels (%i) ne correspond pas au nombre d'images (%i).", ui8NbLabels, * pui8NbBitmaps);
+        exit(EXIT_FAILURE);
+    }
+
+    //
+
 }

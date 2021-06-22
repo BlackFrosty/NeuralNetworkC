@@ -5,7 +5,7 @@
     #include <stdint.h>
     #include <stdlib.h>
     #include "structures.h"
-    #include "Util.c"
+    #include "Util.h"
 
     //magic key identification for Image & Label files
     #define MAGIC_NUMBER_IMG        (uint8_t)2051
