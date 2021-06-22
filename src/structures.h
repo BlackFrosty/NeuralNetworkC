@@ -7,6 +7,13 @@
 #define NEURALNETWORKC_STRUCTURES_H
 #include <stdint.h>
 
+#define NB_COUCHES  2
+#define NB_DENDRITES_INIT   170
+#define NB_NEURONES_COUCHE_1 66
+#define NB_NEURONES_COUCHE_2 10
+
+
+
 /**
  * T_NEURONE : contient
  *   - un pointeur vers un tableau de poids synaptiques
@@ -62,5 +69,7 @@ void libere_couche(T_COUCHE * );
 void * instancie_rso(uint8_t ui8NbCouches);
 void libere_rso(T_RSO * rso);
 void libere_cascade(T_RSO *pRso);
+void init_rso_neurones(uint8_t ui8NbCouches);
+
 
 #endif //NEURALNETWORKC_STRUCTURES_H

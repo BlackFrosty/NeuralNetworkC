@@ -37,6 +37,8 @@ void libere_couche(T_COUCHE * pCouche)
 }
 
 
+
+
 void * instancie_rso(uint8_t ui8NbCouches)
 {
     static T_RSO rso;
@@ -64,7 +66,25 @@ void libere_cascade(T_RSO *pRso)
         {
             libere_neurone(pRso->pCouche[iNbC]->pNeur[iNbN]);
         }
-        libere_couche(iNbN < pRso->pCouche[iNbC]);
+        libere_couche(pRso->pCouche[iNbC]);
     }
     //libere_rso(pRso)
 }
+
+void init_rso_neurones(uint8_t ui8NbCouches)
+{
+    T_RSO * pReseau ;
+    pReseau = instancie_rso((ui8NbCouches));
+
+    pReseau->pCouche[0] = instancie_couche(NB_NEURONES_COUCHE_1);
+    for (uint16_t i = 0 ; i < pReseau->pCouche[0]->ui16NbNeurones; i++)
+    {
+        pReseau->pCouche[0]->pNeur[i] = instancie_neurone(NB_DENDRITES_INIT);
+    }
+    pReseau->pCouche[1] = instancie_couche(NB_NEURONES_COUCHE_2);
+    for (uint16_t i = 0 ; i < pReseau->pCouche[1]->ui16NbNeurones; i++)
+    {
+        pReseau->pCouche[1]->pNeur[i] = instancie_neurone(NB_NEURONES_COUCHE_1);
+    }
+}
+
