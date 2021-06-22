@@ -16,3 +16,6 @@
     #define NB_ENTREES_APPR         60000
 
 #endif
+
+double**    readImageFile(char * pcFileLocation) ;
+
