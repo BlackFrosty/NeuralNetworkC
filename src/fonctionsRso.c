@@ -115,7 +115,6 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
     
 }
 
-
 /*---------------------------------------------------------------------------------------------------------*/
 /*  afficherProbaCouche                                                                                    */
 /* Fonction : affiche les poba calculee par les neurones sur une couche                                    */
