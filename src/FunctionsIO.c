@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 double**    readImageFile(char * pcFileLocation) { 
-    static double adTabPixel[NB_LIGNES_BMP][NB_COLONNES_BMP];
+    static double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP];
     
     //open file
     FILE * f = fopen(pcFileLocation, "r");
@@ -30,7 +30,7 @@ double**    readImageFile(char * pcFileLocation) {
     //nombre de lignes par image
 	unsigned int nbLignes = lireEntier(TAILLE_BLOC, 1, f);
 
-    if (nbLignes != NB_LIGNES_BMP) {
+    if (nbLignes != NB_ELEMENTS_BMP) {
         fprintf(stderr, "Nombre de lignes par image invalide : '%u'.\n" , nbLignes);
         exit(EXIT_FAILURE);
     }//if
@@ -38,14 +38,14 @@ double**    readImageFile(char * pcFileLocation) {
     //nombre de colonnes par image
     unsigned int nbColonnes = lireEntier(TAILLE_BLOC, 1, f);
 
-    if (nbLignes != NB_LIGNES_BMP) {
+    if (nbLignes != NB_ELEMENTS_BMP) {
         fprintf(stderr,	"Nombre de colonnes par image invalide : '%u'.\n", nbColonnes);
         exit(EXIT_FAILURE);
     }//if
     
     //remplissage du tableau avec les pixels lus
-    for (unsigned int ligne = 0; ligne < NB_LIGNES_BMP; ligne++) {
-        for (unsigned int colonne = 0; colonne < NB_COLONNES_BMP; colonne++) {
+    for (unsigned int ligne = 0; ligne < NB_ELEMENTS_BMP; ligne++) {
+        for (unsigned int colonne = 0; colonne < NB_ELEMENTS_BMP; colonne++) {
 
             //Lecture d'une entrée de 1 octets 
             if (fread(adTabPixel[[ligne][colonne], 1, 1, f) != 1) {
