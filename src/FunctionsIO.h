@@ -9,8 +9,7 @@
     #define MAGIC_NUMBER_LBL        2049
     
     //nombre de lignes et de colonnes d'une image du fichier bitmap
-    #define NB_LIGNES_BMP           28
-    #define NB_COLONNES_BMP         28
+    #define NB_ELEMENTS_BMP           28
     
     //nombre maximum de lignes à lire dans le fichier d'apprentissage
     #define NB_ENTREES_APPR         60000
