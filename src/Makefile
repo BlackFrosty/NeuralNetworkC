@@ -9,7 +9,7 @@ LIBS=-lm
 
 DEPS = main.c \
 structures.c structures.h \
-FunctionsIO.c FunctionsIO.h \
+functionsIO.c functionsIO.h \
 Calcul.c Calcul.h \
 rso_neurones.h rso_neurones.c \
 Util.c Util.h \
