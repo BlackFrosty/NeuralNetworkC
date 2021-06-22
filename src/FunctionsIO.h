@@ -15,6 +15,9 @@
     //nombre maximum de lignes à lire dans le fichier d'apprentissage
     #define NB_ENTREES_APPR         60000
 
+    //nombre maximum de lignes à lire dans le fichier de test
+    #define NB_ENTREES_TEST     10000
+
 #endif
 
 double**    readImageFile(char * pcFileLocation) ;
