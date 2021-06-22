@@ -20,6 +20,8 @@ typedef struct {
     uint16_t ui16NbDendrites;
     double dValeurSortie;
     double dGradient;
+    double (*fActication)(double);
+    double (*fDerivActivation)(double);
 } T_NEURONE;
 
 /**
