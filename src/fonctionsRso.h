@@ -11,8 +11,10 @@
 #include "structures.h"
 
 
-void propager( T_RSO * , double [] ) ;
-void calculerProbaCoucheCahee(  double [] ,T_COUCHE *) ;
+void propager( T_RSO * , T_BITMAP * , uint32_t ) ;
+void calculerProbaCoucheCachee(  double * , T_COUCHE * ) ;
 void calculerProbaCoucheSortie( T_COUCHE *, T_COUCHE * ) ;
 void afficherProbaCouche( T_COUCHE *  ) ;
+
+
 #endif /* FonctionsRso_h */

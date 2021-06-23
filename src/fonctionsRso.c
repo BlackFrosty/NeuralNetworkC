@@ -60,8 +60,8 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
         uint8_t k = 0 ;
         dTabEntreeUnitaire[k] = 1.0 ;
         
-        for ( uint16_t j = 0 ; j < bitmapCourant.ui8HauteurMaxP ; j++ ){
-            for ( uint16_t i = 0 ; i < bitmapCourant.ui8HauteurMaxP ; i++ ){
+        for ( uint16_t j = 0 ; j < bitmapCourant.ui32HauteurMaxP ; j++ ){
+            for ( uint16_t i = 0 ; i < bitmapCourant.ui32HauteurMaxP ; i++ ){
                 k += 1 ;
                 dTabEntreeUnitaire[k] = bitmapCourant.pTabPixelMaxP[j][i] ;
                 
@@ -85,15 +85,14 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
 /* Entree :  pointeur vers la couche cachee, tableau de double des entree = 1 bitmaps en 1 + 13x13 pxls    */
 /* Sortie :                                                                                                */
 /*---------------------------------------------------------------------------------------------------------*/
-
-void calculerProbaCoucheCachee( double dTabEntree[], T_COUCHE *coucheCachee ){
+void calculerProbaCoucheCachee( double * dTabEntree, T_COUCHE *coucheCachee ){
     
     // TODO : Cas du neurone de biais
     coucheCachee->pNeur[0].dValeurSortie = 1.0;
     
     // TODO : Cas des neurone normaux
     for ( uint16_t cptNeurone = 1 ; cptNeurone < coucheCachee->ui16NbNeurones ; cptNeurone++ ){
-        calculerProbaNeuroneCachee( &coucheCachee->pNeur[cptNeurone], dTabEntree ) ;
+        calculerProbaNeuroneCachee( &coucheCachee->pNeur[cptNeurone], dTabEntree, coucheCachee->pNeur[cptNeurone].ui16NbDendrites) ;
     }
 
     
@@ -111,14 +110,14 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
     double dTabEntree [66] = {0} ;
     
     // recuperation des valeurs de sortie de la couche cachee en tant qu entree de la couche de sortie
-
     for ( uint8_t cpt = 0 ; cpt < coucheCachee->ui16NbNeurones ; cpt++ ){
         dTabEntree[cpt] = coucheCachee->pNeur[cpt].dValeurSortie ;
     }
 
+    // aplication de la fonction d activation sur chaque neurone
     for ( uint8_t cptNeurone = 0 ; cptNeurone < coucheSortie->ui16NbNeurones ; cptNeurone++ ){
-        // TODO : Remplacer sigmoide par moyenne pondérée, ou autre (ou renommer la fonction calculerProbaNeurone en calculerProbaNeuroneCachee)
-        calculerProbaNeuroneSortie( &coucheSortie->pNeur[cptNeurone], dTabEntree ) ;
+
+        calculerProbaNeuroneSortie( &coucheSortie->pNeur[cptNeurone], dTabEntree,  coucheSortie->pNeur[cptNeurone].ui16NbDendrites) ;
     }
     
     // calcul de la somme des exponentielles des valeurs de sortie de la couche de sortie
