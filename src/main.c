@@ -14,7 +14,7 @@ void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
     readImageFile(FIC_IMAGES, &ui32NbBitmap, paBitmap);
     for (int i = 0; i < ui32NbBitmap; i++)
     {
-        printf("Hauteur bitmap: %lf\n", paBitmap[i].ui32HauteurOriginal);
+        printf("Hauteur bitmap: %ld\n", paBitmap[i].ui32HauteurOriginal);
     }
     // Lire les labels
     // Lire le fichier de poids
