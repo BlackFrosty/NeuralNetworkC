@@ -58,7 +58,7 @@ T_RSO * instancie_rso(uint8_t ui8NbCouches)
     rso.pCouche = calloc(rso.ui8NbCouches, sizeof(T_COUCHE));
     if (rso.pCouche == NULL)
     {
-        perror("Echec d'instanciation des couches);
+        perror("Echec d'instanciation des couches");
         exit(EXIT_FAILURE);
     }
     else
