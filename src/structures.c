@@ -2,33 +2,41 @@
 // Created by tmdt2021 on 21/06/2021.
 //
 
-#include <stdio.h>
+/**
+ * structures.c
+ * Contient les fonctions nécessaires à l'instanciation des structures utilisés par le réseau de neurones
+ *
+ */
+
+#include <stdio.h>  // printf
 #include <stdlib.h> // calloc,malloc,free
 #include <unistd.h>
 #include "structures.h"
 
+/**
+ * instancie_neurone
+ * Crée le tableau de poids propre au neurone
+ * @param pNeur : Pointeur sur un neurone
+ * @param ui16NbDendrites : Nombre de dendrites d'entrées (et donc de poids correspondant à instancier)
+ */
 void instancie_neurone(T_NEURONE * pNeur, uint16_t ui16NbDendrites)
 {
     pNeur->ui16NbDendrites = ui16NbDendrites;
-    //printf("Neurone av : %p\n", pNeur->pdPoids);
     pNeur->pdPoids = calloc(ui16NbDendrites, sizeof(double ));
     if (pNeur->pdPoids == NULL)
     {
         perror("Echec de l'instantation des poids d'un neurone");
     }
-    /*else
-    {
-        printf("Poids de neurone instanciés\n");
-    }*/
-    //printf("Neurone ap : %p\n", pNeur->pdPoids);
 }
 
+/**
+ * libere_neurone : Libère le tableau de poids réservé par instancie_neurone
+ * @param pNeur : Neurone à libérer de poids
+ */
 void libere_neurone(T_NEURONE * pNeur)
 {
     free(pNeur->pdPoids);
     pNeur->pdPoids = NULL;
-    //free(pNeur);
-    //pNeur = NULL;
 }
 
 void instancie_couche(T_COUCHE * pCouche, uint16_t ui16NbNeurones)
@@ -51,6 +59,11 @@ void libere_couche(T_COUCHE * pCouche)
     pCouche->pNeur = NULL;
 }
 
+/**
+ * instancie_rso : Crée la variable du réseau de neurones, et réserve la mémoire pour le tableau de couches
+ * @param ui8NbCouches : Nombre de couches à instancier
+ * @return pointeur sur le réseau de neurones (T_RSO *)
+ */
 T_RSO * instancie_rso(uint8_t ui8NbCouches)
 {
     static T_RSO rso;
@@ -61,10 +74,6 @@ T_RSO * instancie_rso(uint8_t ui8NbCouches)
         perror("Echec d'instanciation des couches");
         exit(EXIT_FAILURE);
     }
-    /*else
-    {
-        printf("Instanciation des couches\n");
-    }*/
     return &rso;
 }
 
@@ -74,32 +83,27 @@ void libere_rso(T_RSO * rso)
 }
 
 /**
- * libere_cascade
- * @param pRso
+ * libere_cascade : Libération récursive des emplacements mémoire liés au réseau de neurones
+ * @param pRso : Pointeur sur le réseau de neurones
  */
 void libere_cascade(T_RSO *pRso)
 {
-    /* Pour chaque couche, libération récursive des neurones */
+    /* Pour chaque couche, libération récursive des neurones et de leurs poids synaptiques */
     for (uint8_t iNbC = 0 ; iNbC < pRso->ui8NbCouches; iNbC++)
     {
         /* Pour chaque neurone de la couche */
         for (uint16_t iNbN = 0 ; iNbN < pRso->pCouche[iNbC].ui16NbNeurones; iNbN++)
         {
-
             libere_neurone(&(pRso->pCouche[iNbC].pNeur[iNbN]));
-            //printf("Libération de poids de neurones\n");
-
         }
         libere_couche(&(pRso->pCouche[iNbC]));
-        //printf("Libération de neurones de couche\n");
-
     }
     //libere_rso(pRso)
 }
 
 /**
  * init_rso_neurones : crée statiquement le réseau de neurones
- * @param ui8NbCouches
+ * @param ui8NbCouches : nombre de couches à instancier
  *
  */
 T_RSO * init_rso_neurones(uint8_t ui8NbCouches)
@@ -109,17 +113,17 @@ T_RSO * init_rso_neurones(uint8_t ui8NbCouches)
     pReseau = instancie_rso((ui8NbCouches));
 
     /* instanciation des couches */
-    instancie_couche(&(pReseau->pCouche[0]), NB_NEURONES_COUCHE_1);
+    instancie_couche(&(pReseau->pCouche[0]), NB_NEURONES_COUCHE_CACHEE);
     /* instanciation différenciée de la couche 0 */
     for (uint16_t i = 0 ; i < pReseau->pCouche[0].ui16NbNeurones; i++)
     {
         instancie_neurone(&(pReseau->pCouche[0].pNeur[i]), NB_DENDRITES_INIT);
     }
-    instancie_couche(&(pReseau->pCouche[1]), NB_NEURONES_COUCHE_2);
+    instancie_couche(&(pReseau->pCouche[1]), NB_NEURONES_COUCHE_SORTIE);
     /* instanciation différenciée de la couche 1 */
     for (uint16_t i = 0 ; i < pReseau->pCouche[1].ui16NbNeurones; i++)
     {
-        instancie_neurone(&(pReseau->pCouche[1].pNeur[i]), NB_NEURONES_COUCHE_1);
+        instancie_neurone(&(pReseau->pCouche[1].pNeur[i]), NB_NEURONES_COUCHE_CACHEE);
     }
     return pReseau;
 }
@@ -136,6 +140,7 @@ T_BITMAP * instancie_bitmap(
         enumLabel enLabel)
 {
     T_BITMAP * pBmp;
+    // Instanciation de la structure et réservation de la mémoire associée
     pBmp = calloc(1, sizeof(T_BITMAP));
     if (pBmp == NULL)
     {
@@ -144,12 +149,12 @@ T_BITMAP * instancie_bitmap(
     }
     else
     {
-        //rintf("Instanation d'un T_BITMAP\n");
         /* initialisation des membres de la structure */
         pBmp->ui32HauteurOriginal = ui32HauteurOrig;
         pBmp->ui32LargeurOriginal = ui32LargeurOrig;
         pBmp->ui32HauteurMaxP = ui32HauteurMaxP;
         pBmp->ui32LargeurMaxP = ui32LargeurMaxP;
+        /* Réservation de la mémoire pour le tableau de taille initiale, en 2 phases */
         pBmp->pTabPixelOriginal = calloc(pBmp->ui32HauteurOriginal, sizeof (double*));
         if (pBmp->pTabPixelOriginal == NULL)
         {
@@ -165,6 +170,7 @@ T_BITMAP * instancie_bitmap(
                 exit(EXIT_FAILURE);
             }
         }
+        /* Réservation de la mémoire pour le tableau maxpoolé, en 2 phases */
         pBmp->pTabPixelMaxP = calloc(pBmp->ui32HauteurMaxP, sizeof (double*));
         if (pBmp->pTabPixelMaxP == NULL)
         {
@@ -200,9 +206,9 @@ T_BITMAP * instancie_tab_bitmap(T_BITMAP * pBmp, uint32_t ui32Count)
         perror("Echec de l'instanciation du tableau de T_BITMAP\n");
         exit(EXIT_FAILURE);
     }
-    else
+    /*else
     {
         printf("Instanciation d'un tableau de %d T_BITMAP\n", ui32Count);
-    }
+    }*/
     return pBmp;
 }
