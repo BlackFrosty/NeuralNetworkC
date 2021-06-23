@@ -136,6 +136,6 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
 /*---------------------------------------------------------------------------------------------------------*/
 void afficherProbaCouche( T_COUCHE * couche ){
     for ( uint8_t cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
-        printf("Probabilite calculee par le neurone %d : %.4f", cpt, couche->pNeur[cpt].dValeurSortie ) ;
+        printf("Probabilite calculee par le neurone %d : %.4f\n", cpt, couche->pNeur[cpt].dValeurSortie ) ;
     }
 }

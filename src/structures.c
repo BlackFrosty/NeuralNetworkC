@@ -16,10 +16,10 @@ void instancie_neurone(T_NEURONE * pNeur, uint16_t ui16NbDendrites)
     {
         perror("Echec de l'instantation des poids d'un neurone");
     }
-    else
+    /*else
     {
         printf("Poids de neurone instanciés\n");
-    }
+    }*/
     //printf("Neurone ap : %p\n", pNeur->pdPoids);
 }
 
@@ -40,11 +40,11 @@ void instancie_couche(T_COUCHE * pCouche, uint16_t ui16NbNeurones)
         perror("Echec d'instanciation des neurones d'une couche");
         exit(EXIT_FAILURE);
     }
-    else
+    /*else
     {
         printf("Instanciation des neurones d'une couche\n");
-    }}
-
+    }*/
+}
 void libere_couche(T_COUCHE * pCouche)
 {
     free(pCouche->pNeur);
@@ -61,10 +61,10 @@ T_RSO * instancie_rso(uint8_t ui8NbCouches)
         perror("Echec d'instanciation des couches");
         exit(EXIT_FAILURE);
     }
-    else
+    /*else
     {
         printf("Instanciation des couches\n");
-    }
+    }*/
     return &rso;
 }
 
@@ -87,11 +87,11 @@ void libere_cascade(T_RSO *pRso)
         {
 
             libere_neurone(&(pRso->pCouche[iNbC].pNeur[iNbN]));
-            printf("Libération de poids de neurones\n");
+            //printf("Libération de poids de neurones\n");
 
         }
         libere_couche(&(pRso->pCouche[iNbC]));
-        printf("Libération de neurones de couche\n");
+        //printf("Libération de neurones de couche\n");
 
     }
     //libere_rso(pRso)
@@ -144,7 +144,7 @@ T_BITMAP * instancie_bitmap(
     }
     else
     {
-        printf("Instanation d'un T_BITMAP");
+        printf("Instanation d'un T_BITMAP\n");
         /* initialisation des membres de la structure */
         pBmp->ui32HauteurOriginal = ui32HauteurOrig;
         pBmp->ui32LargeurOriginal = ui32LargeurOrig;
@@ -193,14 +193,15 @@ T_BITMAP * instancie_bitmap(
  */
 void instancie_tab_bitmap(T_BITMAP * pBmp, uint32_t ui32Count)
 {
-    pBmp = calloc(ui8Count, sizeof(T_BITMAP));
+    //printf("nb Bitmaps %d\n", ui32Count);
+    pBmp = calloc(ui32Count, sizeof(T_BITMAP));
     if (pBmp == NULL)
     {
-        perror("Echec de l'instanciation du tableau de T_BITMAP");
+        perror("Echec de l'instanciation du tableau de T_BITMAP\n");
         exit(EXIT_FAILURE);
     }
     else
     {
-        printf("Instanciation d'un tableau de T_BITMAP");
+        printf("Instanciation d'un tableau de %d T_BITMAP\n", ui32Count);
     }
 }

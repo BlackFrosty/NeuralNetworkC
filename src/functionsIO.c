@@ -16,11 +16,18 @@ uint32_t     checkMagicNumber (FILE * fpImageFD, uint32_t ui32MagicNumber ) {
         perror("Erreur de lecture d'entier dans le fichier d'entree.");
         exit(EXIT_FAILURE);
     }
+    //printf("Magic av : %x %ld\n", ui32res, ui32res);
     ui32res = swapEndians (ui32res);
-    
+    //rintf("Magic ap : %x %ld\n", ui32res, ui32res);
     //Check with provided Magic Number
-    if (ui32res == ui32MagicNumber) {return 1;}
-    return 0;
+    if (ui32res == ui32MagicNumber)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 //Open file and check 
@@ -38,9 +45,11 @@ FILE*       openFile (char * pcFileLocation) {
 void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * pstrBitmaps) {
     //Open Image file
     FILE * fpImageFD = openFile(pcFileLocation);
-    
+
     //Lecture et contrôle de la "clé" magique
-	if (checkMagicNumber(fpImageFD, MAGIC_NUMBER_IMG)) {
+
+    //printf("%d %x\n", iBool, iBool);
+	if (! checkMagicNumber(fpImageFD, MAGIC_NUMBER_IMG)) {
         perror("Erreur : la clé magique ne correspond pas au type image.");
         exit(EXIT_FAILURE);
     }
@@ -51,6 +60,9 @@ void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP
         exit(EXIT_FAILURE);
     }
     * pui32NbBitmaps = swapEndians(* pui32NbBitmaps);
+    //printf("Nombre de bitmaps : %d, p %p\n", *pui32NbBitmaps, pui32NbBitmaps);
+
+    instancie_tab_bitmap(pstrBitmaps, * pui32NbBitmaps );
 
     //Lecture et sauvegarde de la largeur des images
 	uint32_t ui32LargeurBitmap = 0;
@@ -61,16 +73,20 @@ void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP
     ui32LargeurBitmap = swapEndians(ui32LargeurBitmap);
     
     //Lecture et sauvegarde de la heuteur des images
-	uint8_t ui32HauteurBitmap = 0;
+	uint32_t ui32HauteurBitmap = 0;
     if (fread(&ui32HauteurBitmap, 4, 1, fpImageFD) != 1) {
         perror("Erreur : la longueur des bitmaps n'est pas lisible.");
         exit(EXIT_FAILURE);
     }
     ui32HauteurBitmap = swapEndians(ui32HauteurBitmap);
+    //printf("Position: %d\n", ftell(fpImageFD));
+    printf("Dimensions : %d x %d\n", ui32HauteurBitmap, ui32LargeurBitmap);
 
     //initialiser la structure à rendre (type T_BITMAP) et les variables de hauteur/largeur
     for (uint32_t ui32BitmapPosition = 0; ui32BitmapPosition < (* pui32NbBitmaps); ui32BitmapPosition++) {
+        printf("%d ", ui32BitmapPosition);
         pstrBitmaps[ui32BitmapPosition] = * instancie_bitmap(ui32HauteurBitmap, ui32LargeurBitmap, (uint32_t) 13, (uint32_t) 13, 255);
+        printf("%d %d\n", pstrBitmaps[ui32BitmapPosition].ui32HauteurOriginal, pstrBitmaps[ui32BitmapPosition].ui32LargeurOriginal);
     }
 
     //Parcourir l'image

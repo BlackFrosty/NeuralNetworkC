@@ -12,7 +12,8 @@
 #define NB_NEURONES_COUCHE_1 66
 #define NB_NEURONES_COUCHE_2 10
 
-
+#define FIC_IMAGES  "../data/numbers/train-images-idx3-ubyte"
+#define FIC_POIDS   "../CoeffOut.txt"
 
 /**
  * T_NEURONE : contient
@@ -52,7 +53,7 @@ typedef struct T_RSO
     uint8_t ui8NbCouches;
 } T_RSO;
 
-typedef enum
+typedef enum enumLabel
 {
     ZERO, UN, DEUX, TROIS, QUATRE, CINQ, SIX, SEPT, HUIT, NEUF, INCONNU=255
 } enumLabel;
@@ -60,7 +61,7 @@ typedef enum
 /**
  * Bitmap
  */
-typedef struct
+typedef struct T_BITMAP
 {
     enumLabel label;
     // TODO : A checker
