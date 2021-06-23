@@ -101,7 +101,7 @@ T_BITMAP * instancie_bitmap(
         uint32_t ui32HauteurOrig,
         uint32_t ui32LargeurOrig,
         uint32_t ui32HauteurMaxP,
-        uint32_t ui32LargeurMaxP
+        uint32_t ui32LargeurMaxP,
         enumLabel enLabel)
 {
     T_BITMAP * pBmp;
