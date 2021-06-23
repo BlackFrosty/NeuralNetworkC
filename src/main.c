@@ -14,14 +14,17 @@ void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
     printf("pReseau = %p\n", pReseau);
     // Lire le fichier d'images
     paBitmap = readImageFile(FIC_IMAGES, &ui32NbBitmap, paBitmap);
-    for (int i = 0; i < ui32NbBitmap; i++)
+    /*for (int i = 0; i < ui32NbBitmap; i++)
     {
         printf("HxL bitmap: %d %d\n", paBitmap[i].ui32HauteurOriginal, paBitmap[i].ui32LargeurOriginal);
-    }
+    }*/
     // Lire les labels
+
+    readLabelFile(FIC_LABEL, &ui32NbBitmap, paBitmap);
     // Lire le fichier de poids
 
-    printf("Avant LirePoids\n");
+    /*printf("Avant LirePoids\n");*/
+
     LirePoids(FIC_POIDS, pReseau);
 
 
@@ -33,6 +36,13 @@ void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
     printf("Avant Propager\n");
     propager(pReseau,paBitmap, ui32NbBitmap);
 
+    /*for (int i = 0 ; i < 10 ; i++)
+    {
+        //printf("%lf\n", paBitmap[i].pTabPixelOriginal[14][14]);
+        afficherImage(&paBitmap[i]);
+        //printf("paBitmap = %p\n", &paBitmap[i]);
+
+    }*/
 
 }
 

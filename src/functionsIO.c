@@ -45,7 +45,8 @@ FILE*       openFile (char * pcFileLocation) {
 T_BITMAP *   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * pstrBitmaps) {
     //Open Image file
     FILE * fpImageFD = openFile(pcFileLocation);
-    printf("paBitmap = %p\n", pstrBitmaps);
+    uint8_t ui8Buffer;
+    //printf("paBitmap = %p\n", pstrBitmaps);
     //Lecture et contrôle de la "clé" magique
 
     //printf("%d %x\n", iBool, iBool);
@@ -63,7 +64,7 @@ T_BITMAP *   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_B
     //printf("Nombre de bitmaps : %d, p %p\n", *pui32NbBitmaps, pui32NbBitmaps);
 
     pstrBitmaps = instancie_tab_bitmap(pstrBitmaps, * pui32NbBitmaps );
-    printf("paBitmap = %p\n", pstrBitmaps);
+    //printf("paBitmap = %p\n", pstrBitmaps);
 
     //Lecture et sauvegarde de la largeur des images
 	uint32_t ui32LargeurBitmap = 0;
@@ -81,38 +82,49 @@ T_BITMAP *   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_B
     }
     ui32HauteurBitmap = swapEndians(ui32HauteurBitmap);
     //printf("Position: %d\n", ftell(fpImageFD));
-    printf("Dimensions : %d x %d\n", ui32HauteurBitmap, ui32LargeurBitmap);
+    //printf("Dimensions : %d x %d\n", ui32HauteurBitmap, ui32LargeurBitmap);
 
     //initialiser la structure à rendre (type T_BITMAP) et les variables de hauteur/largeur
     for (uint32_t ui32BitmapPosition = 0; ui32BitmapPosition < (* pui32NbBitmaps); ui32BitmapPosition++) {
         //printf("%d ", ui32BitmapPosition);
         pstrBitmaps[ui32BitmapPosition] = * instancie_bitmap(ui32HauteurBitmap, ui32LargeurBitmap, (uint32_t) 13, (uint32_t) 13, 255);
-        printf("%d %d\n", pstrBitmaps[ui32BitmapPosition].ui32HauteurOriginal, pstrBitmaps[ui32BitmapPosition].ui32LargeurOriginal);
+        //printf("%d %d\n", pstrBitmaps[ui32BitmapPosition].ui32HauteurOriginal, pstrBitmaps[ui32BitmapPosition].ui32LargeurOriginal);
     }
     printf("Tout est instancié\n");
     //Parcourir l'image
     for (uint32_t ui32ImagePosition = 0; ui32ImagePosition < (* pui32NbBitmaps); ui32ImagePosition++) {
         //initialize pImageBuffer
-        double ** pImageBuffer = (double **) malloc (ui32HauteurBitmap * sizeof(double*));
+        //double ** pImageBuffer = (double **) malloc (ui32HauteurBitmap * sizeof(double*));
         // TODO : Instancier la matrice en 2 temps
         // TODO : Transformer en fonction
         
-        for (uint32_t ui32Row = 0; ui32Row < ui32HauteurBitmap; ui32Row++)
+        /*for (uint32_t ui32Row = 0; ui32Row < ui32HauteurBitmap; ui32Row++)
         {
             pImageBuffer[ui32Row] = (double *) malloc (ui32LargeurBitmap  * sizeof(double));
-        }
+        }*/
         //double ** pImageBuffer = (double **) malloc ((* pui8LargeurBitmap) * (* pui8HauteurBitmap) * sizeof(double));
         
         //remplissage du tableau pImageBuffer avec chaque pixels lu       
         for (uint32_t ui32Row = 0; ui32Row < ui32HauteurBitmap; ui32Row++) {
                 //Lecture d'une entrée de 1 octets
-                if (fread(pImageBuffer[ui32Row], 28, 1, fpImageFD) != 1) {
-                    perror("Erreur : La lecture des pixels dans le fichier d'entree a échoué.");
-                    exit(EXIT_FAILURE);
+                for (uint32_t ui32Column = 0; ui32Column < ui32LargeurBitmap; ui32Column++)
+                {
+
+                    if (fread(&ui8Buffer, 1, 1, fpImageFD) != 1)
+                    {
+                        perror("Erreur : La lecture des pixels dans le fichier d'entree a échoué.");
+                        exit(EXIT_FAILURE);
+                    }
+                    else
+                    {
+                        pstrBitmaps[ui32ImagePosition].pTabPixelOriginal[ui32Row][ui32Column] = (double) ui8Buffer;
+                    }
                 }
+
         }
-        pstrBitmaps[ui32ImagePosition].pTabPixelOriginal = pImageBuffer;
-        free(pImageBuffer);
+        MaxPooling(&(pstrBitmaps[ui32ImagePosition]));
+        //pstrBitmaps[ui32ImagePosition].pTabPixelOriginal = pImageBuffer;
+        //free(pImageBuffer);
     }
     printf("Avant le fclose\n");
     //fermeture du fichier d'entrées
@@ -125,7 +137,7 @@ void    readLabelFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP
     FILE * fpLabelFD = openFile(pcFileLocation);
     
     //Lecture et contrôle de la "clé" magique
-	if (checkMagicNumber(fpLabelFD, MAGIC_NUMBER_LBL)) {
+	if (!checkMagicNumber(fpLabelFD, MAGIC_NUMBER_LBL)) {
         perror("Erreur : la clé magique ne correspond pas au type label.");
         exit(EXIT_FAILURE);
     }

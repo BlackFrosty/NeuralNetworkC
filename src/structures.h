@@ -13,6 +13,7 @@
 #define NB_NEURONES_COUCHE_2 10
 
 #define FIC_IMAGES  "../data/numbers/train-images-idx3-ubyte"
+#define FIC_LABEL  "../data/numbers/train-labels-idx1-ubyte"
 #define FIC_POIDS   "../CoeffOut.txt"
 
 /**

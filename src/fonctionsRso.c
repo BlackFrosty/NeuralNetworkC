@@ -30,6 +30,7 @@
 #include "calculs.h"
 #include "structures.h"
 #include "fonctionsRso.h"
+#include "Util.h"
 
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -44,25 +45,29 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
     printf("Pointeurs : %p %p\n", reseau, TabEntreeBitmap);
     // 170 = nb de dendrites des neurones de la couche cachee
     double dTabEntreeUnitaire [170] ;
+    uint32_t ui32Correct = 0;
+    uint8_t  neuroneWinner = 0;
     
     // recuperation des pointeurs vers les couches cachee et sortie
     T_COUCHE * coucheCachee = &(reseau->pCouche[0]) ;
     T_COUCHE * coucheSortie = &(reseau->pCouche[1]) ;
-    printf("@Couches %p %p\n", coucheCachee, coucheSortie);
+    //printf("@Couches %p %p\n", coucheCachee, coucheSortie);
 
     // parcours de l ensemble des bitmaps d entree
+    //for ( uint32_t cptBitmap = 0 ; cptBitmap < 10 ; cptBitmap++ ){
     for ( uint32_t cptBitmap = 0 ; cptBitmap < ui32NbBitmap ; cptBitmap++ ){
 
-        printf("Avant TabEntreeBitmap\n");
+        //printf("Avant TabEntreeBitmap\n");
         T_BITMAP bitmapCourant = TabEntreeBitmap[cptBitmap] ;
-        printf("Bitmap : %d %d %d %d\n", bitmapCourant.ui32HauteurOriginal,
-                bitmapCourant.ui32LargeurOriginal, bitmapCourant.ui32HauteurMaxP, bitmapCourant.ui32LargeurMaxP);
+        /*printf("Bitmap : %d %d %d %d\n", bitmapCourant.ui32HauteurOriginal,
+                bitmapCourant.ui32LargeurOriginal, bitmapCourant.ui32HauteurMaxP, bitmapCourant.ui32LargeurMaxP);*/
 
         // recuperation 1 par 1 des bits du bitmapcourant : 1 + 169 pixels
-        
+        //afficherImage(bitmapCourant);
+
         uint8_t k = 0 ;
         dTabEntreeUnitaire[k] = 1.0 ;
-        printf("Avant for\n");
+        //printf("Avant for\n");
         for ( uint16_t j = 0 ; j < bitmapCourant.ui32HauteurMaxP ; j++ ){
             for ( uint16_t i = 0 ; i < bitmapCourant.ui32LargeurMaxP ; i++ ){
                 //printf("h*l %d %d j:%d i:%d\n", bitmapCourant.ui32HauteurMaxP, bitmapCourant.ui32LargeurMaxP, j, i);
@@ -71,21 +76,33 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
                 
             }
         }
+        /*for (int i = 0 ; i  < 170 ; i++)
+        {
+            printf("%lf ", dTabEntreeUnitaire[i]);
+        }
+        printf("\n");*/
 
-        printf("Avant calculerProbaCoucheCachee\n");
+        //printf("Avant calculerProbaCoucheCachee\n");
         // envoi d un bitmap en entree de la couche cachee
         calculerProbaCoucheCachee( dTabEntreeUnitaire, coucheCachee) ;
 
-        printf("Avant calculerProbaCoucheSortie\n");
+        //printf("Avant calculerProbaCoucheSortie\n");
         // calcul de la couche de sortie
         calculerProbaCoucheSortie( coucheCachee, coucheSortie ) ;
 
-        printf("Avant afficherProbaCouche\n");
-        afficherProbaCouche( coucheSortie ) ;
-        printf("Après afficherProbaCouche\n");
 
 
+        //printf("Avant afficherProbaCouche\n");
+        neuroneWinner = afficherProbaCouche( coucheSortie ) ;
+        //printf("Après afficherProbaCouche\n");
+
+        //printf("Label d'entrainement : %d\n\n ", bitmapCourant.label);
+        if (neuroneWinner == bitmapCourant.label)
+        {
+            ui32Correct++;
+        }
     }
+    printf("Nombre de résultats corrects / tests totaux : %d/%d soit %f\%\n", ui32Correct, ui32NbBitmap, ui32Correct/ (double) ui32NbBitmap * 100);
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -143,8 +160,19 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
 /* Entree :  pointeur vers la couche                                                                       */
 /* Sortie :                                                                                                */
 /*---------------------------------------------------------------------------------------------------------*/
-void afficherProbaCouche( T_COUCHE * couche ){
+uint8_t afficherProbaCouche( T_COUCHE * couche ){
+
+    uint8_t neuroneMax = 0;
+    double valMax = 0.0;
     for ( uint8_t cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
-        printf("Probabilite calculee par le neurone %d : %.4f\n", cpt, couche->pNeur[cpt].dValeurSortie ) ;
+        //printf("Probabilite calculee par le neurone %d : %.4f\n", cpt, couche->pNeur[cpt].dValeurSortie ) ;
+        if (couche->pNeur[cpt].dValeurSortie > valMax)
+        {
+            valMax = couche->pNeur[cpt].dValeurSortie;
+            neuroneMax = cpt;
+        }
     }
+    //printf("Probabilite max calculee par le neurone %d : %.4f\n", neuroneMax, valMax ) ;
+    //printf("\n");
+    return neuroneMax;
 }

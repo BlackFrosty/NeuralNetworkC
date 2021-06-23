@@ -15,7 +15,6 @@ void MaxPooling (T_BITMAP * ptrBitmap){
     int y = 0 ;
 
     for (int i = 1 ; i < NB_ELEMENTS_BMP - 1 ; i+=2, x++, y=0) {
-
         for (int j=  1 ; j < NB_ELEMENTS_BMP - 1 ; j+=2, y++){
 
             ptrBitmap->pTabPixelMaxP[x][y] = fmax(ptrBitmap->pTabPixelOriginal[i][j], ptrBitmap->pTabPixelOriginal[i+1][j]) ;
@@ -24,6 +23,10 @@ void MaxPooling (T_BITMAP * ptrBitmap){
             {
                 ptrBitmap->pTabPixelMaxP[x][y] = fmax(ptrBitmap->pTabPixelOriginal[i][j+1],ptrBitmap->pTabPixelOriginal[i+1][j+1] );
             }//if
+            /*printf("%lf, (%lf %lf %lf %lf)\n", ptrBitmap->pTabPixelMaxP[x][y],
+                   ptrBitmap->pTabPixelOriginal[i][j], ptrBitmap->pTabPixelOriginal[i][j+1],
+                   ptrBitmap->pTabPixelOriginal[i+1][j], ptrBitmap->pTabPixelOriginal[i+1][j+1]);*/
+
 
         }//for
 
@@ -92,3 +95,35 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
     return cptValLues;
 
 }//lirePoids()
+
+//fonction d'affichage d'une image d'un bitmap
+void afficherImage(T_BITMAP * elem) {
+
+    printf("\n");
+
+    for (int i = 0; i < 28; i++) {
+        for (int j = 0; j < 28; j++) {
+            if (elem->pTabPixelOriginal[i][j] > (double)0) {
+                printf("*");
+            } else {
+                printf(" ");
+            }//if
+        }//for
+        printf("\n");
+    }//for
+    printf("\n");
+
+    /*for (int i = 0; i < 13; i++) {
+        for (int j = 0; j < 13; j++) {
+            if (elem->pTabPixelMaxP[i][j] > (double)0) {
+                printf("*");
+            } else {
+                printf(".");
+            }//if
+        }//for
+        printf("\n");
+    }//for
+    printf("\n");*/
+
+    printf("Label : %d\n", elem->label);
+}//afficherImage

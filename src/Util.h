@@ -10,5 +10,5 @@
 void MaxPooling(T_BITMAP * ptrBitmap);
 
 int LirePoids(char * szNomFicIn ,  T_RSO * pReseau);
-
+void afficherImage(T_BITMAP *);
 #endif //NEURALNETWORKC_UTIL_H
