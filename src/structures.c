@@ -6,14 +6,12 @@
 #include <stdlib.h> // calloc,malloc,free
 #include "structures.h"
 
-T_NEURONE * instancie_neurone(uint16_t ui16NbDendrites)
+void instancie_neurone(T_NEURONE * pNeur, uint16_t ui16NbDendrites)
 {
-    T_NEURONE* pNeur ; // = calloc(1, sizeof(T_NEURONE));
-    printf("Neurone av : %p\n", pNeur->pdPoids);
-    pNeur->pdPoids = calloc(ui16NbDendrites, sizeof(double ));
-    printf("Neurone ap : %p\n", pNeur->pdPoids);
     pNeur->ui16NbDendrites = ui16NbDendrites;
-    return pNeur;
+    //printf("Neurone av : %p\n", pNeur->pdPoids);
+    pNeur->pdPoids = calloc(ui16NbDendrites, sizeof(double ));
+    //printf("Neurone ap : %p\n", pNeur->pdPoids);
 }
 
 void libere_neurone(T_NEURONE * pNeur)
@@ -24,13 +22,10 @@ void libere_neurone(T_NEURONE * pNeur)
     //pNeur = NULL;
 }
 
-T_COUCHE * instancie_couche(uint16_t ui16NbNeurones)
+void instancie_couche(T_COUCHE * pCouche, uint16_t ui16NbNeurones)
 {
-    T_COUCHE * pCouche ;
-    pCouche = calloc(1, sizeof(T_COUCHE));
     pCouche->ui16NbNeurones = ui16NbNeurones;
     pCouche->pNeur = calloc(pCouche->ui16NbNeurones, sizeof(T_NEURONE));
-    return pCouche;
 }
 
 void libere_couche(T_COUCHE * pCouche)
@@ -62,11 +57,11 @@ void libere_cascade(T_RSO *pRso)
     for (uint8_t iNbC = 0 ; iNbC < pRso->ui8NbCouches; iNbC++)
     {
         /* Pour chaque neurone */
-        for (uint16_t iNbN = 0 ; iNbN < pRso->pCouche[iNbC]->ui16NbNeurones; iNbN)
+        for (uint16_t iNbN = 0 ; iNbN < pRso->pCouche[iNbC].ui16NbNeurones; iNbN)
         {
-            libere_neurone(pRso->pCouche[iNbC]->pNeur[iNbN]);
+            libere_neurone(&(pRso->pCouche[iNbC].pNeur[iNbN]));
         }
-        libere_couche(pRso->pCouche[iNbC]);
+        libere_couche(&(pRso->pCouche[iNbC]));
     }
     //libere_rso(pRso)
 }
@@ -83,17 +78,17 @@ T_RSO * init_rso_neurones(uint8_t ui8NbCouches)
     pReseau = instancie_rso((ui8NbCouches));
 
     /* instanciation des couches */
-    pReseau->pCouche[0] = instancie_couche(NB_NEURONES_COUCHE_1);
+    instancie_couche(&(pReseau->pCouche[0]), NB_NEURONES_COUCHE_1);
     /* instanciation différenciée de la couche 0 */
-    for (uint16_t i = 0 ; i < pReseau->pCouche[0]->ui16NbNeurones; i++)
+    for (uint16_t i = 0 ; i < pReseau->pCouche[0].ui16NbNeurones; i++)
     {
-        pReseau->pCouche[0]->pNeur[i] = instancie_neurone(NB_DENDRITES_INIT);
+        instancie_neurone(&(pReseau->pCouche[0].pNeur[i]), NB_DENDRITES_INIT);
     }
-    pReseau->pCouche[1] = instancie_couche(NB_NEURONES_COUCHE_2);
+    instancie_couche(&(pReseau->pCouche[1]), NB_NEURONES_COUCHE_2);
     /* instanciation différenciée de la couche 1 */
-    for (uint16_t i = 0 ; i < pReseau->pCouche[1]->ui16NbNeurones; i++)
+    for (uint16_t i = 0 ; i < pReseau->pCouche[1].ui16NbNeurones; i++)
     {
-        pReseau->pCouche[1]->pNeur[i] = instancie_neurone(NB_NEURONES_COUCHE_1);
+        instancie_neurone(&(pReseau->pCouche[1].pNeur[i]), NB_NEURONES_COUCHE_1);
     }
     return pReseau;
 }
