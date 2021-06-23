@@ -47,10 +47,11 @@ void propager( T_RSO * reseau, double dTabEntree[] ){
     // recuperation des pointeurs vers les couches cachee et sortie
     T_COUCHE * coucheCachee = &(reseau->pCouche[0]) ;
     T_COUCHE * coucheSortie = &(reseau->pCouche[1]) ;
-    
+
+    // TODO : rédaction provisoire
     // parcours de l ensemble des bitmaps d entree
     for ( cpt = 0 ; cpt < 60000 ; cpt++ ){
-        
+        // TODO : Adapter entrée unitaire à la structure bitmap
         // recuperation 1 par 1 des bitmaps : 1 + 169 pixels
         dTabEntreeUnitaire[0] = 1.0 ;
         
@@ -60,9 +61,10 @@ void propager( T_RSO * reseau, double dTabEntree[] ){
         
         
         // envoi d un bitmap en entree de la couche cachee
-        calculerProbaCoucheCahee(coucheCachee , dTabEntreeUnitaire) ;
+        calculerProbaCoucheCachee(coucheCachee , dTabEntreeUnitaire) ;
         
         // calcul de la couche de sortie
+        // TODO : Inverser la liste des paramètres ?
         calculerProbaCoucheSortie(coucheCachee, coucheSortie ) ;
         
         // calcul de la somme des exponentielles des valeurs de sortie de la couche de sortie
@@ -78,17 +80,19 @@ void propager( T_RSO * reseau, double dTabEntree[] ){
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
-/*  calculerProbaCoucheCahee                                                                               */
+/*  calculerProbaCoucheCachee                                                                               */
 /* Fonction : lance le calcul de la couche cachee                                                          */
 /* Entree :  pointeur vers la couche cachee, tableau de double des entree = 1 bitmaps en 1 + 13x13 pxls    */
 /* Sortie :                                                                                                */
 /*---------------------------------------------------------------------------------------------------------*/
 
-void calculerProbaCoucheCahee( T_COUCHE *coucheCachee, double dTabEntree[] ){
-    
-    for ( uint16_t cptNeurone = 0 ; cptNeurone < coucheCachee->ui16NbNeurones ; cptNeurone++ ){
+void calculerProbaCoucheCachee( T_COUCHE *coucheCachee, double dTabEntree[] ){
+    // TODO : Cas des neurone normaux
+    for ( uint16_t cptNeurone = 1 ; cptNeurone < coucheCachee->ui16NbNeurones ; cptNeurone++ ){
         calculerProbaNeurone( &coucheCachee->pNeur[cptNeurone], dTabEntree ) ;
     }
+    // TODO : Cas du neurone de biais
+    coucheCachee->pNeur[0] = 1.0;
     
 }
 
@@ -104,12 +108,13 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
     double dTabEntree [66] = {0} ;
     
     // recuperation des valeurs de sortie de la couche cachee en tant qu entree de la couche de sortie
-    dTabEntree[0] = 0 ;
+    // dTabEntree[0] = 0 ;
     for ( uint8_t cpt = 0 ; cpt < coucheCachee->ui16NbNeurones ; cpt++ ){
         dTabEntree[cpt] = coucheCachee->pNeur[cpt].dValeurSortie ;
     }
 
     for ( uint8_t cptNeurone = 0 ; cptNeurone < coucheSortie->ui16NbNeurones ; cptNeurone++ ){
+        // TODO : Remplacer sigmoide par moyenne pondérée, ou autre (ou renommer la fonction calculerProbaNeurone en calculerProbaNeuroneCachee)
         calculerProbaNeurone( &coucheSortie->pNeur[cptNeurone], dTabEntree ) ;
     }
     
@@ -123,6 +128,6 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
 /*---------------------------------------------------------------------------------------------------------*/
 void afficherProbaCouche( T_COUCHE * couche ){
     for ( uint8_t cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
-        printf("Probabilite clculee par le neurone %d : %.4f", cpt, couche->pNeur[cpt].dValeurSortie ) ;
+        printf("Probabilite calculee par le neurone %d : %.4f", cpt, couche->pNeur[cpt].dValeurSortie ) ;
     }
 }
