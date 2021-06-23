@@ -64,9 +64,12 @@ typedef struct
 {
     enumLabel label;
     // TODO : A checker
-    double ** pTabPixel;
-    uint8_t ui8Largeur;
-    uint8_t ui8Longueur;
+    double ** pTabPixelOriginal;
+    double ** pTabPixelMaxP;
+    uint8_t ui8LargeurOriginal;
+    uint8_t ui8LongueurOriginal;
+    uint8_t ui8LargeurMaxP;
+    uint8_t ui8LongueurMaxP;
 } T_BITMAP;
 
 void instancie_neurone(T_NEURONE * , uint16_t );

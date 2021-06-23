@@ -8,8 +8,8 @@
     #include "Util.h"
 
     //magic key identification for Image & Label files
-    #define MAGIC_NUMBER_IMG        (uint8_t)2051
-    #define MAGIC_NUMBER_LBL        (uint8_t)2049
+    #define MAGIC_NUMBER_IMG        (uint32_t)2051
+    #define MAGIC_NUMBER_LBL        (uint32_t)2049
 
     //fonction ouvrant un fichier image et renvoyant un tableau de tableau avec la valeur de chaque pixel
     T_BITMAP    readImageFile(char * pcFileLocation, uint8_t bMaxPooling);
