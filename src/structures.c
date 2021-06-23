@@ -185,3 +185,22 @@ T_BITMAP * instancie_bitmap(
 
     return pBmp;
 }
+
+/**
+ * Instancie un tableau de bitmap dont le nombre et le pointeur sur ce tableau sont fournis en paramètres
+ * @param pBmp
+ * @param ui8Count
+ */
+void instancie_tab_bitmap(T_BITMAP * pBmp, uint8_t ui8Count)
+{
+    pBmp = calloc(ui8Count, sizeof(T_BITMAP));
+    if (pBmp == NULL)
+    {
+        perror("Echec de l'instanciation du tableau de T_BITMAP");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        printf("Instanciation d'un tableau de T_BITMAP");
+    }
+}
