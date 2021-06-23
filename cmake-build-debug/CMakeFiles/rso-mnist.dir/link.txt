@@ -1,0 +1,1 @@
+/usr/bin/cc -g CMakeFiles/rso-mnist.dir/src/main.c.o CMakeFiles/rso-mnist.dir/src/Util.c.o CMakeFiles/rso-mnist.dir/src/structures.c.o CMakeFiles/rso-mnist.dir/src/calculs.c.o CMakeFiles/rso-mnist.dir/src/functionsIO.c.o CMakeFiles/rso-mnist.dir/src/fonctionsRso.c.o -o rso-mnist  -lm 

@@ -58,19 +58,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2021.1.1/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/152/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2021.1.1/bin/cmake/linux/bin/cmake -E rm -f
+RM = /snap/clion/152/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/user/prog/NeuralNetworkC
+CMAKE_SOURCE_DIR = /home/mdl/CLionProjects/NeuralNetworkC
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/user/prog/NeuralNetworkC/cmake-build-debug
+CMAKE_BINARY_DIR = /home/mdl/CLionProjects/NeuralNetworkC/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -78,7 +78,7 @@ CMAKE_BINARY_DIR = /home/user/prog/NeuralNetworkC/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/clion-2021.1.1/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/152/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -89,7 +89,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/opt/clion-2021.1.1/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/152/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -99,9 +99,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/prog/NeuralNetworkC/cmake-build-debug/CMakeFiles /home/user/prog/NeuralNetworkC/cmake-build-debug//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdl/CLionProjects/NeuralNetworkC/cmake-build-debug/CMakeFiles /home/mdl/CLionProjects/NeuralNetworkC/cmake-build-debug//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/prog/NeuralNetworkC/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/mdl/CLionProjects/NeuralNetworkC/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -130,179 +130,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named NeuralNetworkC
+# Target rules for targets named rso-mnist
 
 # Build rule for target.
-NeuralNetworkC: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NeuralNetworkC
-.PHONY : NeuralNetworkC
+rso-mnist: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 rso-mnist
+.PHONY : rso-mnist
 
 # fast build rule for target.
-NeuralNetworkC/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/build
-.PHONY : NeuralNetworkC/fast
-
-src/Bitmap.o: src/Bitmap.c.o
-
-.PHONY : src/Bitmap.o
-
-# target to build an object file
-src/Bitmap.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Bitmap.c.o
-.PHONY : src/Bitmap.c.o
-
-src/Bitmap.i: src/Bitmap.c.i
-
-.PHONY : src/Bitmap.i
-
-# target to preprocess a source file
-src/Bitmap.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Bitmap.c.i
-.PHONY : src/Bitmap.c.i
-
-src/Bitmap.s: src/Bitmap.c.s
-
-.PHONY : src/Bitmap.s
-
-# target to generate assembly for a file
-src/Bitmap.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Bitmap.c.s
-.PHONY : src/Bitmap.c.s
-
-src/Couche.o: src/Couche.c.o
-
-.PHONY : src/Couche.o
-
-# target to build an object file
-src/Couche.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Couche.c.o
-.PHONY : src/Couche.c.o
-
-src/Couche.i: src/Couche.c.i
-
-.PHONY : src/Couche.i
-
-# target to preprocess a source file
-src/Couche.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Couche.c.i
-.PHONY : src/Couche.c.i
-
-src/Couche.s: src/Couche.c.s
-
-.PHONY : src/Couche.s
-
-# target to generate assembly for a file
-src/Couche.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Couche.c.s
-.PHONY : src/Couche.c.s
-
-src/Iris.o: src/Iris.c.o
-
-.PHONY : src/Iris.o
-
-# target to build an object file
-src/Iris.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Iris.c.o
-.PHONY : src/Iris.c.o
-
-src/Iris.i: src/Iris.c.i
-
-.PHONY : src/Iris.i
-
-# target to preprocess a source file
-src/Iris.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Iris.c.i
-.PHONY : src/Iris.c.i
-
-src/Iris.s: src/Iris.c.s
-
-.PHONY : src/Iris.s
-
-# target to generate assembly for a file
-src/Iris.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Iris.c.s
-.PHONY : src/Iris.c.s
-
-src/Neurone.o: src/Neurone.c.o
-
-.PHONY : src/Neurone.o
-
-# target to build an object file
-src/Neurone.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Neurone.c.o
-.PHONY : src/Neurone.c.o
-
-src/Neurone.i: src/Neurone.c.i
-
-.PHONY : src/Neurone.i
-
-# target to preprocess a source file
-src/Neurone.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Neurone.c.i
-.PHONY : src/Neurone.c.i
-
-src/Neurone.s: src/Neurone.c.s
-
-.PHONY : src/Neurone.s
-
-# target to generate assembly for a file
-src/Neurone.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Neurone.c.s
-.PHONY : src/Neurone.c.s
-
-src/PMC.o: src/PMC.c.o
-
-.PHONY : src/PMC.o
-
-# target to build an object file
-src/PMC.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/PMC.c.o
-.PHONY : src/PMC.c.o
-
-src/PMC.i: src/PMC.c.i
-
-.PHONY : src/PMC.i
-
-# target to preprocess a source file
-src/PMC.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/PMC.c.i
-.PHONY : src/PMC.c.i
-
-src/PMC.s: src/PMC.c.s
-
-.PHONY : src/PMC.s
-
-# target to generate assembly for a file
-src/PMC.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/PMC.c.s
-.PHONY : src/PMC.c.s
-
-src/Statistiques.o: src/Statistiques.c.o
-
-.PHONY : src/Statistiques.o
-
-# target to build an object file
-src/Statistiques.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Statistiques.c.o
-.PHONY : src/Statistiques.c.o
-
-src/Statistiques.i: src/Statistiques.c.i
-
-.PHONY : src/Statistiques.i
-
-# target to preprocess a source file
-src/Statistiques.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Statistiques.c.i
-.PHONY : src/Statistiques.c.i
-
-src/Statistiques.s: src/Statistiques.c.s
-
-.PHONY : src/Statistiques.s
-
-# target to generate assembly for a file
-src/Statistiques.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Statistiques.c.s
-.PHONY : src/Statistiques.c.s
+rso-mnist/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/build
+.PHONY : rso-mnist/fast
 
 src/Util.o: src/Util.c.o
 
@@ -310,7 +148,7 @@ src/Util.o: src/Util.c.o
 
 # target to build an object file
 src/Util.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Util.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/Util.c.o
 .PHONY : src/Util.c.o
 
 src/Util.i: src/Util.c.i
@@ -319,7 +157,7 @@ src/Util.i: src/Util.c.i
 
 # target to preprocess a source file
 src/Util.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Util.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/Util.c.i
 .PHONY : src/Util.c.i
 
 src/Util.s: src/Util.c.s
@@ -328,35 +166,89 @@ src/Util.s: src/Util.c.s
 
 # target to generate assembly for a file
 src/Util.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/Util.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/Util.c.s
 .PHONY : src/Util.c.s
 
-src/file_mgmt.o: src/file_mgmt.c.o
+src/calculs.o: src/calculs.c.o
 
-.PHONY : src/file_mgmt.o
+.PHONY : src/calculs.o
 
 # target to build an object file
-src/file_mgmt.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/file_mgmt.c.o
-.PHONY : src/file_mgmt.c.o
+src/calculs.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/calculs.c.o
+.PHONY : src/calculs.c.o
 
-src/file_mgmt.i: src/file_mgmt.c.i
+src/calculs.i: src/calculs.c.i
 
-.PHONY : src/file_mgmt.i
+.PHONY : src/calculs.i
 
 # target to preprocess a source file
-src/file_mgmt.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/file_mgmt.c.i
-.PHONY : src/file_mgmt.c.i
+src/calculs.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/calculs.c.i
+.PHONY : src/calculs.c.i
 
-src/file_mgmt.s: src/file_mgmt.c.s
+src/calculs.s: src/calculs.c.s
 
-.PHONY : src/file_mgmt.s
+.PHONY : src/calculs.s
 
 # target to generate assembly for a file
-src/file_mgmt.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/file_mgmt.c.s
-.PHONY : src/file_mgmt.c.s
+src/calculs.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/calculs.c.s
+.PHONY : src/calculs.c.s
+
+src/fonctionsRso.o: src/fonctionsRso.c.o
+
+.PHONY : src/fonctionsRso.o
+
+# target to build an object file
+src/fonctionsRso.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/fonctionsRso.c.o
+.PHONY : src/fonctionsRso.c.o
+
+src/fonctionsRso.i: src/fonctionsRso.c.i
+
+.PHONY : src/fonctionsRso.i
+
+# target to preprocess a source file
+src/fonctionsRso.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/fonctionsRso.c.i
+.PHONY : src/fonctionsRso.c.i
+
+src/fonctionsRso.s: src/fonctionsRso.c.s
+
+.PHONY : src/fonctionsRso.s
+
+# target to generate assembly for a file
+src/fonctionsRso.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/fonctionsRso.c.s
+.PHONY : src/fonctionsRso.c.s
+
+src/functionsIO.o: src/functionsIO.c.o
+
+.PHONY : src/functionsIO.o
+
+# target to build an object file
+src/functionsIO.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/functionsIO.c.o
+.PHONY : src/functionsIO.c.o
+
+src/functionsIO.i: src/functionsIO.c.i
+
+.PHONY : src/functionsIO.i
+
+# target to preprocess a source file
+src/functionsIO.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/functionsIO.c.i
+.PHONY : src/functionsIO.c.i
+
+src/functionsIO.s: src/functionsIO.c.s
+
+.PHONY : src/functionsIO.s
+
+# target to generate assembly for a file
+src/functionsIO.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/functionsIO.c.s
+.PHONY : src/functionsIO.c.s
 
 src/main.o: src/main.c.o
 
@@ -364,7 +256,7 @@ src/main.o: src/main.c.o
 
 # target to build an object file
 src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/main.c.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/main.c.o
 .PHONY : src/main.c.o
 
 src/main.i: src/main.c.i
@@ -373,7 +265,7 @@ src/main.i: src/main.c.i
 
 # target to preprocess a source file
 src/main.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/main.c.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/main.c.i
 .PHONY : src/main.c.i
 
 src/main.s: src/main.c.s
@@ -382,8 +274,35 @@ src/main.s: src/main.c.s
 
 # target to generate assembly for a file
 src/main.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NeuralNetworkC.dir/build.make CMakeFiles/NeuralNetworkC.dir/src/main.c.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/main.c.s
 .PHONY : src/main.c.s
+
+src/structures.o: src/structures.c.o
+
+.PHONY : src/structures.o
+
+# target to build an object file
+src/structures.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/structures.c.o
+.PHONY : src/structures.c.o
+
+src/structures.i: src/structures.c.i
+
+.PHONY : src/structures.i
+
+# target to preprocess a source file
+src/structures.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/structures.c.i
+.PHONY : src/structures.c.i
+
+src/structures.s: src/structures.c.s
+
+.PHONY : src/structures.s
+
+# target to generate assembly for a file
+src/structures.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/rso-mnist.dir/build.make CMakeFiles/rso-mnist.dir/src/structures.c.s
+.PHONY : src/structures.c.s
 
 # Help Target
 help:
@@ -393,34 +312,25 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... NeuralNetworkC"
-	@echo "... src/Bitmap.o"
-	@echo "... src/Bitmap.i"
-	@echo "... src/Bitmap.s"
-	@echo "... src/Couche.o"
-	@echo "... src/Couche.i"
-	@echo "... src/Couche.s"
-	@echo "... src/Iris.o"
-	@echo "... src/Iris.i"
-	@echo "... src/Iris.s"
-	@echo "... src/Neurone.o"
-	@echo "... src/Neurone.i"
-	@echo "... src/Neurone.s"
-	@echo "... src/PMC.o"
-	@echo "... src/PMC.i"
-	@echo "... src/PMC.s"
-	@echo "... src/Statistiques.o"
-	@echo "... src/Statistiques.i"
-	@echo "... src/Statistiques.s"
+	@echo "... rso-mnist"
 	@echo "... src/Util.o"
 	@echo "... src/Util.i"
 	@echo "... src/Util.s"
-	@echo "... src/file_mgmt.o"
-	@echo "... src/file_mgmt.i"
-	@echo "... src/file_mgmt.s"
+	@echo "... src/calculs.o"
+	@echo "... src/calculs.i"
+	@echo "... src/calculs.s"
+	@echo "... src/fonctionsRso.o"
+	@echo "... src/fonctionsRso.i"
+	@echo "... src/fonctionsRso.s"
+	@echo "... src/functionsIO.o"
+	@echo "... src/functionsIO.i"
+	@echo "... src/functionsIO.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/structures.o"
+	@echo "... src/structures.i"
+	@echo "... src/structures.s"
 .PHONY : help
 
 
