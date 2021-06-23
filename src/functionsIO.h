@@ -12,11 +12,11 @@
     #define MAGIC_NUMBER_LBL        (uint32_t)2049
 
     //fonction ouvrant un fichier image et renvoyant un tableau de tableau avec la valeur de chaque pixel
-    T_BITMAP    readImageFile(char * pcFileLocation, uint8_t bMaxPooling);
-    void        readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap);
+    T_BITMAP *  readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps);
+    void        readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint32_t * pui32NbBitmaps);
     FILE *      openFile (char * pcFileLocation);
-    uint8_t     swapEndians (uint8_t ui8num);
-    uint8_t     checkMagicNumber (FILE * iImageFD, uint8_t ui8MagicNumber );
+    uint32_t    swapEndians (uint32_t ui8num);
+    uint32_t    checkMagicNumber (FILE * iImageFD, uint32_t ui8MagicNumber );
 
 #endif
 

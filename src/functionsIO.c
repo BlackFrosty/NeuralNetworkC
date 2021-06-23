@@ -35,7 +35,7 @@ FILE*       openFile (char * pcFileLocation) {
 }
 
 //
-T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
+T_BITMAP *  readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
     //Open Image file
     FILE * fpImageFD = openFile(pcFileLocation);
     
@@ -69,34 +69,33 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
     ui32HauteurBitmap = swapEndians(ui32HauteurBitmap);
 
     //initialiser la structure à rendre (type T_BITMAP) et les variables de hauteur/largeur
-    T_BITMAP * pstrBitmaps[* pui32NbBitmaps];
+    T_BITMAP    strBitmaps[* pui32NbBitmaps];
     for (uint32_t ui32BitmapPosition = 0; ui32BitmapPosition < (* pui32NbBitmaps); ui32BitmapPosition++) {
-        pstrBitmaps[ui32BitmapPosition] = (T_BITMAP *) malloc (sizeof(T_BITMAP));
-        pstrBitmaps[ui32BitmapPosition] = instancie_bitmap( * pui32HauteurBitmap, * pui32LargeurBitmap, (uint32_t) 13, (uint32_t) 13, 255);
+        strBitmaps[ui32BitmapPosition] = * instancie_bitmap(ui32HauteurBitmap, ui32LargeurBitmap, (uint32_t) 13, (uint32_t) 13, 255);
     }
 
     //Parcourir l'image
     for (uint32_t ui32ImagePosition = 0; ui32ImagePosition < (* pui32NbBitmaps); ui32ImagePosition++) {
         //initialize pImageBuffer
-        double ** pImageBuffer = (double **) malloc ((* pui8HauteurBitmap) * sizeof(double*));
+        double ** pImageBuffer = (double **) malloc (ui32HauteurBitmap * sizeof(double*));
         // TODO : Instancier la matrice en 2 temps
         // TODO : Transformer en fonction
         
-        for (uint8_t ui8Row = 0; ui8Row < (* pui8HauteurBitmap); ui8Row++)
+        for (uint32_t ui32Row = 0; ui32Row < ui32HauteurBitmap; ui32Row++)
         {
-            pImageBuffer[ui8Row] = (double *) malloc ((* pui8LargeurBitmap)  * sizeof(double));
+            pImageBuffer[ui32Row] = (double *) malloc (ui32LargeurBitmap  * sizeof(double));
         }
         //double ** pImageBuffer = (double **) malloc ((* pui8LargeurBitmap) * (* pui8HauteurBitmap) * sizeof(double));
         
         //remplissage du tableau pImageBuffer avec chaque pixels lu       
-        for (uint8_t ui8Row = 0; ui8Row < (* pui8HauteurBitmap); ui8Row++) {
+        for (uint32_t ui32Row = 0; ui32Row < ui32HauteurBitmap; ui32Row++) {
                 //Lecture d'une entrée de 1 octets
-                if (fread(pImageBuffer[ui8Row], 28, 1, fpImageFD) != 1) {
+                if (fread(pImageBuffer[ui32Row], 28, 1, fpImageFD) != 1) {
                     perror("Erreur : La lecture des pixels dans le fichier d'entree a échoué.");
                     exit(EXIT_FAILURE);
                 }
         }
-        pstrBitmaps[ui32ImagePosition] = pImageBuffer;
+        strBitmaps[ui32ImagePosition].pTabPixelOriginal = pImageBuffer;
         free(pImageBuffer);
     }
 
@@ -104,10 +103,10 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
     //fermeture du fichier d'entrées
 	fclose(fpImageFD);
 
-    return pstrBitmaps ;
+    return strBitmaps ;
 }
 
-void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint32_t * pui32NbBitmaps) {
+void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmaps, uint32_t * pui32NbBitmaps) {
     //Read Image file
     FILE * fpLabelFD = openFile(pcFileLocation);
     
@@ -119,7 +118,7 @@ void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint32_t * p
     
     //Lecture et sauvegarde du nombre de labels
     uint32_t ui32NbLabels = 0;
-    if (fread(&ui32NbLabels, 4, 1, fpImageFD) != 1) {
+    if (fread(&ui32NbLabels, 4, 1, fpLabelFD) != 1) {
         perror("Erreur : le nombre de labels n'est pas lisible.");
         exit(EXIT_FAILURE);
     }
@@ -127,7 +126,7 @@ void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint32_t * p
 
     //Check if number of labels equals number of images
     if ((* pui32NbBitmaps) != ui32NbLabels) {
-        perror("Erreur : le nombre de labels (%i) ne correspond pas au nombre d'images (%i).", ui32NbLabels, * pui32NbBitmaps);
+        perror("Erreur : le nombre de labels ne correspond pas au nombre d'images.");
         exit(EXIT_FAILURE);
     }
 
@@ -141,6 +140,6 @@ void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint32_t * p
     }
     
     //fermeture du fichier d'entrées
-	fclose(fpImageFD);
+	fclose(fpLabelFD);
 
 }
