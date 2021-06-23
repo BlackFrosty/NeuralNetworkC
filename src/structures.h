@@ -24,7 +24,7 @@
 
 typedef struct T_NEURONE {
     /* tableau de poids */
-    double ** pdPoids;
+    double * pdPoids;
     uint16_t ui16NbDendrites;
     double dValeurSortie;
     double dGradient;
@@ -37,7 +37,7 @@ typedef struct T_NEURONE {
  */
 typedef struct T_COUCHE {
     /* tableau de neurones */
-    T_NEURONE ** pNeur;
+    T_NEURONE * pNeur;
     uint16_t ui16NbNeurones;
 } T_COUCHE;
 
@@ -48,7 +48,7 @@ typedef struct T_COUCHE {
 typedef struct T_RSO
 {
     /* tableau de couches */
-    T_COUCHE ** pCouche;
+    T_COUCHE * pCouche;
     uint8_t ui8NbCouches;
 } T_RSO;
 
@@ -65,9 +65,9 @@ typedef struct
     uint8_t ui8Longueur;
 } T_BITMAP;
 
-T_NEURONE * instancie_neurone(uint16_t );
+void instancie_neurone(T_NEURONE * , uint16_t );
 void libere_neurone(T_NEURONE * );
-T_COUCHE * instancie_couche(uint16_t );
+void instancie_couche(T_COUCHE * , uint16_t );
 void libere_couche(T_COUCHE * );
 void * instancie_rso(uint8_t ui8NbCouches);
 void libere_rso(T_RSO * rso);
