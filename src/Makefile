@@ -16,7 +16,7 @@ Util.c Util.h \
 fonctionsRso.c fonctionsRso.h
 
 
-OBJ = main.o structures.o FunctionsIO.o Calcul.o rso_neurones.o Util.o FunctionsRso.o
+OBJ = main.o structures.o functionsIO.o calcul.o rso_neurones.o Util.o FunctionsRso.o
 
 
 %.o: %.c $(DEPS)
@@ -32,4 +32,4 @@ rso-mini: main.o structures.o
 .PHONY: clean
 
 clean:
-	rm -f *.o *~ core a.out
+	rm -f *.o *~ core a.out rso rso-mnist
