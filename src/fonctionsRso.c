@@ -89,7 +89,7 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
 void calculerProbaCoucheCachee( double dTabEntree[], T_COUCHE *coucheCachee ){
     
     // TODO : Cas du neurone de biais
-    coucheCachee->pNeur[0] = 1.0;
+    coucheCachee->pNeur[0].dValeurSortie = 1.0;
     
     // TODO : Cas des neurone normaux
     for ( uint16_t cptNeurone = 1 ; cptNeurone < coucheCachee->ui16NbNeurones ; cptNeurone++ ){
