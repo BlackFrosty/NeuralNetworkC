@@ -101,14 +101,14 @@ T_BITMAP * instancie_bitmap(
         uint32_t ui32HauteurOrig,
         uint32_t ui32LargeurOrig,
         uint32_t ui32HauteurMaxP,
-        uint32_t ui32LargeurOrig,
+        uint32_t ui32LargeurMax,
         enumLabel enLabel)
 {
     T_BITMAP * pBmp;
     pBmp = calloc(1, sizeof(T_BITMAP));
     if (pBmp == NULL)
     {
-        perror("Echec de l'instanciation d'un T_BITMAP")
+        perror("Echec de l'instanciation d'un T_BITMAP");
     }
     else
     {
