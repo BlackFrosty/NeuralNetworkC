@@ -106,10 +106,10 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint8_t * pui8NbBitmaps, uint8_
 
 void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint8_t * pui8NbBitmaps) {
     //Read Image file
-    FILE * fpImageFD = openFile(pcFileLocation);
+    FILE * fpLabelFD = openFile(pcFileLocation);
     
     //Lecture et contrôle de la "clé" magique
-	if (checkMagicNumber(fpImageFD, MAGIC_NUMBER_LBL)) {
+	if (checkMagicNumber(fpLabelFD, MAGIC_NUMBER_LBL)) {
         perror("Erreur : la clé magique ne correspond pas au type label.");
         exit(EXIT_FAILURE);
     }
@@ -128,6 +128,16 @@ void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint8_t * pu
         exit(EXIT_FAILURE);
     }
 
-    //
+    //Lecture et sauvegarde des labels     
+    for (uint8_t ui8Position = 0; ui8Position < ui8NbLabels; ui8Position++) {
+        //Lecture d'une entrée de 1 octets 
+        if (fread(pstrBitmaps[ui8Position].label, 1, 1, fpLabelFD) != 1) {
+            perror("Erreur : La lecture d'un label (octet) dans le fichier d'entree a échoué.");
+            exit(EXIT_FAILURE);
+        }
+    }
+    
+    //fermeture du fichier d'entrées
+	fclose(fpImageFD);
 
 }
