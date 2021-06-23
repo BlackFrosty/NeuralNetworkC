@@ -13,6 +13,7 @@
 
 
 #include <stdio.h>
+#include <stdint.h>
 
 /*---------------------------------------------*/
 /*     INCLUDE PERSONNELS   - prototypes       */
@@ -23,8 +24,9 @@
 #define MAX_NB_DENDRITES 170
 
 
-void calculerProbaNeurone(T_NEURONE *, double [] )  ;
-double moyennePonderee(T_NEURONE *, double []) ;
+void calculerProbaNeuroneCachee(T_NEURONE *, double *, uint16_t )  ;
+void calculerProbaNeuroneSortie(T_NEURONE *, double *, uint16_t )  ;
+double moyennePonderee(T_NEURONE *, double *, uint16_t) ;
 double sigmoide ( double ) ;
 double derivSigmoide( double ) ;
 double sommeExpProba( T_COUCHE * ) ;

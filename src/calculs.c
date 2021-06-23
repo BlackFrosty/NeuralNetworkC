@@ -24,21 +24,32 @@
 
 
 /*--------------------------------------------------------------------------------------*/
-/*  calculerProbaNeurone                                                                */
-/* Fonction : calcul de la probabilité pour un neurone                                  */
+/*  calculerProbaNeuroneCache                                                           */
+/* Fonction : calcul de la probabilité pour un neurone de la couche cachee              */
 /* Entree :  un pointeur vers un neuronne, le tableau des valeurs d entree du neurone   */
 /* Sortie :  la probabilite calculee par le neuronne                                    */
 /*--------------------------------------------------------------------------------------*/
 
-// En fonction de la lecture des valeurs d'entrée
-// possiblement double *, avec taille d'éléments
-void calculerProbaNeurone(T_NEURONE *neurone, double tabEntrees [MAX_NB_DENDRITES]) {
+void calculerProbaNeuroneCachee(T_NEURONE *neurone, double * tabEntrees, uint16_t ui16Size) {
     
     //mise à jour de la valeur de sortie du neurone
-    neurone->dValeurSortie = sigmoide(moyennePonderee(neurone, tabEntrees));
+    neurone->dValeurSortie = sigmoide(moyennePonderee(neurone, tabEntrees, ui16Size));
 
 }
 
+/*--------------------------------------------------------------------------------------*/
+/*  calculerProbaNeuroneSortie                                                          */
+/* Fonction : calcul de la probabilité pour un neurone de la couche de sortie           */
+/* Entree :  un pointeur vers un neuronne, le tableau des valeurs d entree du neurone   */
+/* Sortie :  la probabilite calculee par le neuronne                                    */
+/*--------------------------------------------------------------------------------------*/
+
+void calculerProbaNeuroneCachee(T_NEURONE *neurone, double * tabEntrees, uint16_t ui16Size) {
+    
+    //mise à jour de la valeur de sortie du neurone
+    neurone->dValeurSortie = moyennePonderee(neurone, tabEntrees, ui16Size);
+
+}
 /*--------------------------------------------------------------------------------------*/
 /*  moyennePonderee                                                                     */
 /* Fonction : fonctgion d agregation de type moyenne ponderee                           */
@@ -47,13 +58,12 @@ void calculerProbaNeurone(T_NEURONE *neurone, double tabEntrees [MAX_NB_DENDRITE
 /* avant le calcul de la sigmoide par le neurone                                        */
 /*--------------------------------------------------------------------------------------*/
 
-// double * au lieu de double[] ?
-double moyennePonderee(T_NEURONE *neurone, double tabEntrees[MAX_NB_DENDRITES]) {
+double moyennePonderee(T_NEURONE *neurone, double * tabEntrees, uint16_t ui16Size) {
     
     double moyennePonderee = 0;
 
     //pour chaque dendrite
-    for (uint16_t numDendrite = 0 ; (numDendrite < MAX_NB_DENDRITES) && (numDendrite < neurone->ui16NbDendrites) ; numDendrite++) {
+    for (uint16_t numDendrite = 0 ; (numDendrite < ui16Size) && (numDendrite < neurone->ui16NbDendrites) ; numDendrite++) {
 
         moyennePonderee +=  tabEntrees[numDendrite] * neurone->pdPoids[numDendrite];
     }
