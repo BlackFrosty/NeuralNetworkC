@@ -1,6 +1,7 @@
 IDIR = .
 CC=gcc
-CFLAGS=-I$(IDIR) -ggdb
+#CFLAGS=-I$(IDIR) -ggdb
+CFLAGS=-I$(IDIR)
 
 ODIR=obj
 LDIR =../lib

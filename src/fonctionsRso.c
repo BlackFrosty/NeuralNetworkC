@@ -41,41 +41,50 @@
 
 void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap ){
 
-    
+    printf("Pointeurs : %p %p\n", reseau, TabEntreeBitmap);
     // 170 = nb de dendrites des neurones de la couche cachee
     double dTabEntreeUnitaire [170] ;
     
     // recuperation des pointeurs vers les couches cachee et sortie
     T_COUCHE * coucheCachee = &(reseau->pCouche[0]) ;
     T_COUCHE * coucheSortie = &(reseau->pCouche[1]) ;
+    printf("@Couches %p %p\n", coucheCachee, coucheSortie);
 
     // parcours de l ensemble des bitmaps d entree
     for ( uint32_t cptBitmap = 0 ; cptBitmap < ui32NbBitmap ; cptBitmap++ ){
-        
+
+        printf("Avant TabEntreeBitmap\n");
         T_BITMAP bitmapCourant = TabEntreeBitmap[cptBitmap] ;
-        
- 
+        printf("Bitmap : %d %d %d %d\n", bitmapCourant.ui32HauteurOriginal,
+                bitmapCourant.ui32LargeurOriginal, bitmapCourant.ui32HauteurMaxP, bitmapCourant.ui32LargeurMaxP);
+
         // recuperation 1 par 1 des bits du bitmapcourant : 1 + 169 pixels
         
         uint8_t k = 0 ;
         dTabEntreeUnitaire[k] = 1.0 ;
-        
+        printf("Avant for\n");
         for ( uint16_t j = 0 ; j < bitmapCourant.ui32HauteurMaxP ; j++ ){
-            for ( uint16_t i = 0 ; i < bitmapCourant.ui32HauteurMaxP ; i++ ){
+            for ( uint16_t i = 0 ; i < bitmapCourant.ui32LargeurMaxP ; i++ ){
+                //printf("h*l %d %d j:%d i:%d\n", bitmapCourant.ui32HauteurMaxP, bitmapCourant.ui32LargeurMaxP, j, i);
                 k += 1 ;
                 dTabEntreeUnitaire[k] = bitmapCourant.pTabPixelMaxP[j][i] ;
                 
             }
         }
-        
+
+        printf("Avant calculerProbaCoucheCachee\n");
         // envoi d un bitmap en entree de la couche cachee
         calculerProbaCoucheCachee( dTabEntreeUnitaire, coucheCachee) ;
-        
+
+        printf("Avant calculerProbaCoucheSortie\n");
         // calcul de la couche de sortie
         calculerProbaCoucheSortie( coucheCachee, coucheSortie ) ;
-        
+
+        printf("Avant afficherProbaCouche\n");
         afficherProbaCouche( coucheSortie ) ;
-        
+        printf("Après afficherProbaCouche\n");
+
+
     }
 }
 

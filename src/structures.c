@@ -144,7 +144,7 @@ T_BITMAP * instancie_bitmap(
     }
     else
     {
-        printf("Instanation d'un T_BITMAP\n");
+        //rintf("Instanation d'un T_BITMAP\n");
         /* initialisation des membres de la structure */
         pBmp->ui32HauteurOriginal = ui32HauteurOrig;
         pBmp->ui32LargeurOriginal = ui32LargeurOrig;
@@ -191,7 +191,7 @@ T_BITMAP * instancie_bitmap(
  * @param pBmp : pointeur vers le tableau
  * @param ui32Count : Nombre d'éléments du tableau à instancier
  */
-void instancie_tab_bitmap(T_BITMAP * pBmp, uint32_t ui32Count)
+T_BITMAP * instancie_tab_bitmap(T_BITMAP * pBmp, uint32_t ui32Count)
 {
     //printf("nb Bitmaps %d\n", ui32Count);
     pBmp = calloc(ui32Count, sizeof(T_BITMAP));
@@ -204,4 +204,5 @@ void instancie_tab_bitmap(T_BITMAP * pBmp, uint32_t ui32Count)
     {
         printf("Instanciation d'un tableau de %d T_BITMAP\n", ui32Count);
     }
+    return pBmp;
 }

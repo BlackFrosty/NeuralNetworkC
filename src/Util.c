@@ -53,19 +53,20 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
     for (  int numCouche = 0 ; numCouche < pReseau->ui8NbCouches ; numCouche++ ) {
 
         //pointeur vers la couche courante
-        T_COUCHE * couche = &pReseau->pCouche[numCouche];
+        T_COUCHE * couche = &(pReseau->pCouche[numCouche]);
 
          //pour chaque neurone de la couche courante
          // TODO : Neurone de biais ? A vérifier ou faire 2 boucles (1 par couche)
         for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ; (numNeurone < couche[numCouche].ui16NbNeurones)
-            && ( fgets(ligne, MAX_TAILLE_LIGNE, fpFicIn) != NULL );
-                 numCouche++ ) {//pour chaque neurone de la couche
+            ;         numNeurone++ ) {//pour chaque neurone de la couche
 
             //pointeur vers le neurone courant
             T_NEURONE * neurone = &couche->pNeur[numNeurone];
 
             //pour chaque case de poids du neurone courant
-            for( int numPoids = 0; numPoids < neurone->ui16NbDendrites ; numPoids++, cptValLues++) {
+            for( int numPoids = 0; numPoids < neurone->ui16NbDendrites && fgets(ligne, MAX_TAILLE_LIGNE, fpFicIn) != NULL ; numPoids++, cptValLues++) {
+
+
 
                 //tentative de lecture d'un poids et d'affection du poids lu dans le tableau de poids du neurone courant
                  if (sscanf(ligne, "%lf", &neurone->pdPoids[numPoids]) != 1) {
@@ -73,13 +74,17 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
                     fprintf(stderr, "Impossible de lire le poids à la ligne %d.\n", cptValLues);
 		            exit(EXIT_FAILURE);
 
-                 }//if
-            
+                 }
+                 /*else
+                 {
+                     printf("ligne %s, %lf\n", ligne, neurone->pdPoids[numPoids]);
+                 }*/ //if
+                //printf("cptValLues = %d\n", cptValLues);
             }//for
-
+            //printf("cptValLues For = %d\n", cptValLues);
         }//for
     }//for
-
+    printf("cptValLues Final = %d\n", cptValLues);
 
     //fermeture du fichier d'entrées
 	fclose(fpFicIn);

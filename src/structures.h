@@ -82,6 +82,6 @@ void libere_rso(T_RSO * rso);
 void libere_cascade(T_RSO *pRso);
 T_RSO * init_rso_neurones(uint8_t ui8NbCouches);
 T_BITMAP * instancie_bitmap(uint32_t , uint32_t , uint32_t , uint32_t , enumLabel);
-void instancie_tab_bitmap(T_BITMAP * , uint32_t );
+T_BITMAP * instancie_tab_bitmap(T_BITMAP * , uint32_t );
 
 #endif //NEURALNETWORKC_STRUCTURES_H
