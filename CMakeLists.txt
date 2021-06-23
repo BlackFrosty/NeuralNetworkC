@@ -13,3 +13,4 @@ add_executable(rso-mnist
         src/Util.c src/Util.h
         src/functionsIO.c src/functionsIO.h
         src/fonctionsRso.c src/fonctionsRso.h)
+target_link_libraries(rso-mnist m)
