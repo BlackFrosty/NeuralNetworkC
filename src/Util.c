@@ -8,8 +8,8 @@
 
 #include "Util.h"
 
-
-void MaxPooling (double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP], double adTabResultat[NB_ELEMENT_MAX_POOLINIG][NB_ELEMENT_MAX_POOLINIG]){
+// TODO : Utiliser le bitmap
+void MaxPooling (double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP], double adTabResultat[NB_ELEMENT_MAX_POOLING][NB_ELEMENT_MAX_POOLING]){
    
     int x = 0 ;
     int y = 0 ;
@@ -50,13 +50,14 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
     //lire tableau
 
     //pour chaque couche du RSO
-    for (  int numCouche = 1 ; numCouche < pReseau->ui8NbCouches ; numCouche++ ) {
+    for (  int numCouche = 0 ; numCouche < pReseau->ui8NbCouches ; numCouche++ ) {
 
         //pointeur vers la couche courante
         T_COUCHE * couche = &pReseau->pCouche[numCouche];
 
-         //pour chaque neurone de la couche courante  
-        for (  int numNeurone = 0 ; (numNeurone < couche[numCouche].ui16NbNeurones)
+         //pour chaque neurone de la couche courante
+         // TODO : Neurone de biais ? A vérifier ou faire 2 boucles (1 par couche)
+        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ; (numNeurone < couche[numCouche].ui16NbNeurones)
             && ( fgets(ligne, MAX_TAILLE_LIGNE, fpFicIn) != NULL );
                  numCouche++ ) {//pour chaque neurone de la couche
 
