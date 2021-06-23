@@ -101,7 +101,7 @@ T_BITMAP * instancie_bitmap(
         uint32_t ui32HauteurOrig,
         uint32_t ui32LargeurOrig,
         uint32_t ui32HauteurMaxP,
-        uint32_t ui32LargeurMax,
+        uint32_t ui32LargeurMaxP
         enumLabel enLabel)
 {
     T_BITMAP * pBmp;
@@ -115,7 +115,7 @@ T_BITMAP * instancie_bitmap(
         pBmp->ui32HauteurOriginal = ui32HauteurOrig;
         pBmp->ui32LargeurOriginal = ui32LargeurOrig;
         pBmp->ui32HauteurMaxP = ui32HauteurMaxP;
-        pBmp->ui32LargeurMaxP = ui32LargeurOrig;
+        pBmp->ui32LargeurMaxP = ui32LargeurMaxP;
         pBmp->pTabPixelOriginal = calloc(pBmp->ui32HauteurOriginal, sizeof (double*));
         for (int i = 0 ; i < pBmp->ui32HauteurOriginal; i++)
         {
