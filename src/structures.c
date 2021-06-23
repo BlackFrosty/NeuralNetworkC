@@ -188,10 +188,10 @@ T_BITMAP * instancie_bitmap(
 
 /**
  * Instancie un tableau de bitmap dont le nombre et le pointeur sur ce tableau sont fournis en paramètres
- * @param pBmp
- * @param ui8Count
+ * @param pBmp : pointeur vers le tableau
+ * @param ui32Count : Nombre d'éléments du tableau à instancier
  */
-void instancie_tab_bitmap(T_BITMAP * pBmp, uint8_t ui8Count)
+void instancie_tab_bitmap(T_BITMAP * pBmp, uint32_t ui32Count)
 {
     pBmp = calloc(ui8Count, sizeof(T_BITMAP));
     if (pBmp == NULL)
