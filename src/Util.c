@@ -8,9 +8,9 @@
 
 #include "Util.h"
 
-// TODO : Utiliser le bitmap
-void MaxPooling (double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP], double adTabResultat[NB_ELEMENT_MAX_POOLING][NB_ELEMENT_MAX_POOLING]){
-   
+// TODO : Utiliser le bitmap = FAIT 
+//void MaxPooling (double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP], double adTabResultat[NB_ELEMENT_MAX_POOLING][NB_ELEMENT_MAX_POOLING]){
+void MaxPooling (T_BITMAP * ptrBitmap){
     int x = 0 ;
     int y = 0 ;
 
@@ -18,11 +18,11 @@ void MaxPooling (double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP], double adT
 
         for (int j=  1 ; j < NB_ELEMENTS_BMP - 1 ; j+=2, y++){
 
-            adTabResultat[x][y] = fmax(adTabPixel[i][j], adTabPixel[i+1][j]) ;
+            ptrBitmap->pTabPixelMaxP[x][y] = fmax(ptrBitmap->pTabPixelOriginal[i][j], ptrBitmap->pTabPixelOriginal[i+1][j]) ;
             
-            if (adTabResultat[x][y] < fmax(adTabPixel[i][j+1],adTabPixel[i+1][j+1])) 
+            if (ptrBitmap->pTabPixelMaxP[x][y] < fmax(ptrBitmap->pTabPixelOriginal[i][j+1],ptrBitmap->pTabPixelOriginal[i+1][j+1])) 
             {
-                adTabResultat[x][y] = fmax(adTabPixel[i][j+1],adTabPixel[i+1][j+1] );
+                ptrBitmap->pTabPixelMaxP[x][y] = fmax(ptrBitmap->pTabPixelOriginal[i][j+1],ptrBitmap->pTabPixelOriginal[i+1][j+1] );
             }//if
 
         }//for

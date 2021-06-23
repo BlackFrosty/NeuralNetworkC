@@ -6,7 +6,8 @@
 #define NB_ELEMENT_MAX_POOLING 13
 #define MAX_TAILLE_LIGNE 15
 
-void MaxPooling (double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP], double adTabResultat[NB_ELEMENT_MAX_POOLING][NB_ELEMENT_MAX_POOLING]);
+
+void MaxPooling(T_BITMAP * ptrBitmap);
 
 int LirePoids(char * szNomFicIn ,  T_RSO * pReseau);
 
