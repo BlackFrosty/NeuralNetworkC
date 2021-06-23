@@ -12,7 +12,7 @@
 
 
 void propager( T_RSO * , double [] ) ;
-void calculerProbaCoucheCahee( T_COUCHE *, double [] ) ;
+void calculerProbaCoucheCahee(  double [] ,T_COUCHE *) ;
 void calculerProbaCoucheSortie( T_COUCHE *, T_COUCHE * ) ;
 void afficherProbaCouche( T_COUCHE *  ) ;
 #endif /* FonctionsRso_h */
