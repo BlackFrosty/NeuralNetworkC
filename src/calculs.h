@@ -20,7 +20,7 @@
 
 #include "structures.h"
 
-#define MAX_NB_DENDRITES 785
+#define MAX_NB_DENDRITES 170
 
 
 void calculerProbaNeurone(T_NEURONE *, double [] )  ;

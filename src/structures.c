@@ -34,7 +34,7 @@ void libere_couche(T_COUCHE * pCouche)
     pCouche->pNeur = NULL;
 }
 
-void * instancie_rso(uint8_t ui8NbCouches)
+T_RSO * instancie_rso(uint8_t ui8NbCouches)
 {
     static T_RSO rso;
     rso.ui8NbCouches = ui8NbCouches;

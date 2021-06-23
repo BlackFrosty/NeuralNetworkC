@@ -30,6 +30,8 @@
 /* Sortie :  la probabilite calculee par le neuronne                                    */
 /*--------------------------------------------------------------------------------------*/
 
+// En fonction de la lecture des valeurs d'entrée
+// possiblement double *, avec taille d'éléments
 void calculerProbaNeurone(T_NEURONE *neurone, double tabEntrees [MAX_NB_DENDRITES]) {
     
     //mise à jour de la valeur de sortie du neurone
@@ -45,6 +47,7 @@ void calculerProbaNeurone(T_NEURONE *neurone, double tabEntrees [MAX_NB_DENDRITE
 /* avant le calcul de la sigmoide par le neurone                                        */
 /*--------------------------------------------------------------------------------------*/
 
+// double * au lieu de double[] ?
 double moyennePonderee(T_NEURONE *neurone, double tabEntrees[MAX_NB_DENDRITES]) {
     
     double moyennePonderee = 0;
@@ -104,9 +107,9 @@ double sommeExpProba( T_COUCHE * coucheSortie ){
 /* Sortie :  un double = nouvelle valeur de sortie du neurone                                              */
 /*---------------------------------------------------------------------------------------------------------*/
 
-void softmax( T_COUCHE * coucheSortie, double dSeommeExp ){
+void softmax( T_COUCHE * coucheSortie, double dSommeExp ){
     for ( uint8_t i = 0 ; i < coucheSortie->ui16NbNeurones ; i ++ ){
-        (coucheSortie->pNeur[i]).dValeurSortie = exp( (coucheSortie->pNeur[i]).dValeurSortie ) / dSeommeExp ;
+        (coucheSortie->pNeur[i]).dValeurSortie = exp( (coucheSortie->pNeur[i]).dValeurSortie ) / dSommeExp ;
     }
 }
 

@@ -57,9 +57,13 @@ typedef enum
     ZERO, UN, DEUX, TROIS, QUATRE, CINQ, SIX, SEPT, HUIT, NEUF, INCONNU=255
 } enumLabel;
 
+/**
+ * Bitmap
+ */
 typedef struct
 {
     enumLabel label;
+    // TODO : A checker
     double ** pTabPixel;
     uint8_t ui8Largeur;
     uint8_t ui8Longueur;
