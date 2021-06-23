@@ -102,7 +102,7 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
             ui32Correct++;
         }
     }
-    printf("Nombre de résultats corrects / tests totaux : %d/%d soit %f\%\n", ui32Correct, ui32NbBitmap, ui32Correct/ (double) ui32NbBitmap * 100);
+    printf("Nombre de résultats corrects / tests totaux : %d/%d soit %f%%\n", ui32Correct, ui32NbBitmap, ui32Correct/ (double) ui32NbBitmap * 100);
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
