@@ -82,12 +82,17 @@ void libere_cascade(T_RSO *pRso)
     /* Pour chaque couche, libération récursive des neurones */
     for (uint8_t iNbC = 0 ; iNbC < pRso->ui8NbCouches; iNbC++)
     {
-        /* Pour chaque neurone */
-        for (uint16_t iNbN = 0 ; iNbN < pRso->pCouche[iNbC].ui16NbNeurones; iNbN)
+        /* Pour chaque neurone de la couche */
+        for (uint16_t iNbN = 0 ; iNbN < pRso->pCouche[iNbC].ui16NbNeurones; iNbN++)
         {
+
             libere_neurone(&(pRso->pCouche[iNbC].pNeur[iNbN]));
+            printf("Libération de poids de neurones\n");
+
         }
         libere_couche(&(pRso->pCouche[iNbC]));
+        printf("Libération de neurones de couche\n");
+
     }
     //libere_rso(pRso)
 }

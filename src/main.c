@@ -13,5 +13,5 @@ int main(int argc, char ** argv)
       //MaxPooling (adTabPixel, NB_ELEMENTS_BMP);
 
       pReseau = init_rso_neurones(NB_COUCHES);
-      
+    libere_cascade(pReseau);
 }
