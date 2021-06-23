@@ -12,7 +12,7 @@
     #define MAGIC_NUMBER_LBL        (uint32_t)2049
 
     //fonction ouvrant un fichier image et renvoyant un tableau de tableau avec la valeur de chaque pixel
-    T_BITMAP *  readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps);
+    void        readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * strBitmaps);
     void        readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint32_t * pui32NbBitmaps);
     FILE *      openFile (char * pcFileLocation);
     uint32_t    swapEndians (uint32_t ui8num);

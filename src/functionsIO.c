@@ -35,7 +35,7 @@ FILE*       openFile (char * pcFileLocation) {
 }
 
 //
-T_BITMAP *  readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
+void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * strBitmaps) {
     //Open Image file
     FILE * fpImageFD = openFile(pcFileLocation);
     
@@ -69,10 +69,10 @@ T_BITMAP *  readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
     ui32HauteurBitmap = swapEndians(ui32HauteurBitmap);
 
     //initialiser la structure à rendre (type T_BITMAP) et les variables de hauteur/largeur
-    T_BITMAP    strBitmaps[* pui32NbBitmaps];
-    for (uint32_t ui32BitmapPosition = 0; ui32BitmapPosition < (* pui32NbBitmaps); ui32BitmapPosition++) {
-        strBitmaps[ui32BitmapPosition] = * instancie_bitmap(ui32HauteurBitmap, ui32LargeurBitmap, (uint32_t) 13, (uint32_t) 13, 255);
-    }
+    // T_BITMAP    strBitmaps[* pui32NbBitmaps];
+    // for (uint32_t ui32BitmapPosition = 0; ui32BitmapPosition < (* pui32NbBitmaps); ui32BitmapPosition++) {
+    //     strBitmaps[ui32BitmapPosition] = * instancie_bitmap(ui32HauteurBitmap, ui32LargeurBitmap, (uint32_t) 13, (uint32_t) 13, 255);
+    // }
 
     //Parcourir l'image
     for (uint32_t ui32ImagePosition = 0; ui32ImagePosition < (* pui32NbBitmaps); ui32ImagePosition++) {
@@ -99,11 +99,8 @@ T_BITMAP *  readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
         free(pImageBuffer);
     }
 
-
     //fermeture du fichier d'entrées
 	fclose(fpImageFD);
-
-    return strBitmaps ;
 }
 
 void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmaps, uint32_t * pui32NbBitmaps) {
