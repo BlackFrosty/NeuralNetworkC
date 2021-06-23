@@ -66,20 +66,21 @@ typedef struct
     // TODO : A checker
     double ** pTabPixelOriginal;
     double ** pTabPixelMaxP;
-    uint8_t ui8LargeurOriginal;
-    uint8_t ui8LongueurOriginal;
-    uint8_t ui8LargeurMaxP;
-    uint8_t ui8LongueurMaxP;
+    uint8_t ui32LargeurOriginal;
+    uint8_t ui32HauteurOriginal;
+    uint8_t ui32LargeurMaxP;
+    uint8_t ui32HauteurMaxP;
 } T_BITMAP;
 
 void instancie_neurone(T_NEURONE * , uint16_t );
 void libere_neurone(T_NEURONE * );
 void instancie_couche(T_COUCHE * , uint16_t );
 void libere_couche(T_COUCHE * );
-void * instancie_rso(uint8_t ui8NbCouches);
+T_RSO * instancie_rso(uint8_t );
 void libere_rso(T_RSO * rso);
 void libere_cascade(T_RSO *pRso);
 T_RSO * init_rso_neurones(uint8_t ui8NbCouches);
+T_BITMAP * instancie_bitmap(uint32_t , uint32_t , uint32_t , uint32_t , enumLabel);
 
 
 #endif //NEURALNETWORKC_STRUCTURES_H

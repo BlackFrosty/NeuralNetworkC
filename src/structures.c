@@ -93,3 +93,41 @@ T_RSO * init_rso_neurones(uint8_t ui8NbCouches)
     return pReseau;
 }
 
+/**
+ * instancie_bitmap : alloue l'espace pour le tbitmap
+ *
+ * */
+T_BITMAP * instancie_bitmap(
+        uint32_t ui32HauteurOrig,
+        uint32_t ui32LargeurOrig,
+        uint32_t ui32HauteurMaxP,
+        uint32_t ui32LargeurMaxP,
+        enumLabel enLabel)
+{
+    T_BITMAP * pBmp;
+    pBmp = calloc(1, sizeof(T_BITMAP));
+    if (pBmp == NULL)
+    {
+        perror("Echec de l'instanciation d'un T_BITMAP");
+    }
+    else
+    {
+        pBmp->ui32HauteurOriginal = ui32HauteurOrig;
+        pBmp->ui32LargeurOriginal = ui32LargeurOrig;
+        pBmp->ui32HauteurMaxP = ui32HauteurMaxP;
+        pBmp->ui32LargeurMaxP = ui32LargeurMaxP;
+        pBmp->pTabPixelOriginal = calloc(pBmp->ui32HauteurOriginal, sizeof (double*));
+        for (int i = 0 ; i < pBmp->ui32HauteurOriginal; i++)
+        {
+            pBmp->pTabPixelOriginal[i] = calloc(pBmp->ui32LargeurOriginal, sizeof(double));
+        }
+        pBmp->pTabPixelMaxP = calloc(pBmp->ui32HauteurMaxP, sizeof (double*));
+        for (int i = 0 ; i < pBmp->ui32HauteurMaxP; i++)
+        {
+            pBmp->pTabPixelMaxP[i] = calloc(pBmp->ui32LargeurMaxP, sizeof(double));
+        }
+        pBmp->label = enLabel;
+    }
+
+    return pBmp;
+}
