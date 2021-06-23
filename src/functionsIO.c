@@ -35,7 +35,7 @@ FILE*       openFile (char * pcFileLocation) {
 }
 
 //
-T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, uint32_t * pui32LargeurBitmapFinal, uint32_t * pui32HauteurBitmapFinal, uint8_t bMaxPooling) {
+T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps) {
     //Open Image file
     FILE * fpImageFD = openFile(pcFileLocation);
     
@@ -45,7 +45,7 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, uint
         exit(EXIT_FAILURE);
     }
     
-    //Lecture et sauvegarde du nombre de bitmaps
+    //Lecture et sauvegarde du nombre de bitmaps  
     if (fread(pui32NbBitmaps, 4, 1, fpImageFD) != 1) {
         perror("Erreur : le nombre de bitmaps n'est pas lisible.");
         exit(EXIT_FAILURE);
@@ -59,8 +59,6 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, uint
         exit(EXIT_FAILURE);
     }
     ui32LargeurBitmap = swapEndians(ui32LargeurBitmap);
-    if (bMaxPooling)    { * pui32LargeurBitmapFinal = 13; }
-    else                { * pui32LargeurBitmapFinal = ui32LargeurBitmap; }
     
     //Lecture et sauvegarde de la heuteur des images
 	uint8_t ui32HauteurBitmap = 0;
@@ -69,23 +67,21 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, uint
         exit(EXIT_FAILURE);
     }
     ui32HauteurBitmap = swapEndians(ui32HauteurBitmap);
-    if (bMaxPooling)    { * pui32HauteurBitmapFinal = 13; }
-    else                { * pui32HauteurBitmapFinal = ui32LargeurBitmap; }
 
     //initialiser la structure à rendre (type T_BITMAP) et les variables de hauteur/largeur
     T_BITMAP * pstrBitmaps[* pui32NbBitmaps];
     for (uint32_t ui32BitmapPosition = 0; ui32BitmapPosition < (* pui32NbBitmaps); ui32BitmapPosition++) {
         pstrBitmaps[ui32BitmapPosition] = (T_BITMAP *) malloc (sizeof(T_BITMAP));
-        // TODO : créer la fonction instancie_bitmap
-        pstrBitmaps[ui32BitmapPosition] = instancie_bitmap(* pui32LargeurBitmapFinal, * pui32HauteurBitmapFinal, 255);
+        pstrBitmaps[ui32BitmapPosition] = instancie_bitmap( * pui32HauteurBitmap, * pui32LargeurBitmap, (uint32_t) 13, (uint32_t) 13, 255);
     }
 
     //Parcourir l'image
     for (uint32_t ui32ImagePosition = 0; ui32ImagePosition < (* pui32NbBitmaps); ui32ImagePosition++) {
         //initialize pImageBuffer
+        double ** pImageBuffer = (double **) malloc ((* pui8HauteurBitmap) * sizeof(double*));
         // TODO : Instancier la matrice en 2 temps
         // TODO : Transformer en fonction
-        double ** pImageBuffer = (double **) malloc ((* pui8HauteurBitmap) * sizeof(double*));
+        
         for (uint8_t ui8Row = 0; ui8Row < (* pui8HauteurBitmap); ui8Row++)
         {
             pImageBuffer[ui8Row] = (double *) malloc ((* pui8LargeurBitmap)  * sizeof(double));
@@ -94,20 +90,17 @@ T_BITMAP*   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, uint
         
         //remplissage du tableau pImageBuffer avec chaque pixels lu       
         for (uint8_t ui8Row = 0; ui8Row < (* pui8HauteurBitmap); ui8Row++) {
-            //for (uint8_t ui8Column = 0; ui8Column < (* pui8LargeurBitmap); ui8Column++) {
                 //Lecture d'une entrée de 1 octets
-                // TODO : Ligne par ligne de 28
                 if (fread(pImageBuffer[ui8Row], 28, 1, fpImageFD) != 1) {
                     perror("Erreur : La lecture des pixels dans le fichier d'entree a échoué.");
                     exit(EXIT_FAILURE);
                 }
-            //}
         }
-        //Apply MaxPooling on each image if needed or store imagebuffer.
-        // TODO : Faire le maxpool dans tous les cas ?
-        if (bMaxPooling)    { MaxPooling(pImageBuffer, pstrBitmaps[ui32ImagePosition]); }
-        else                { pstrBitmaps[ui32ImagePosition] = pImageBuffer; }
+        pstrBitmaps[ui32ImagePosition] = pImageBuffer;
+        free(pImageBuffer);
     }
+
+
     //fermeture du fichier d'entrées
 	fclose(fpImageFD);
 
