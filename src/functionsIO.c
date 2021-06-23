@@ -35,7 +35,7 @@ FILE*       openFile (char * pcFileLocation) {
 }
 
 //
-void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * strBitmaps) {
+void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * pstrBitmaps) {
     //Open Image file
     FILE * fpImageFD = openFile(pcFileLocation);
     
@@ -95,7 +95,7 @@ void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP
                     exit(EXIT_FAILURE);
                 }
         }
-        strBitmaps[ui32ImagePosition].pTabPixelOriginal = pImageBuffer;
+        pstrBitmaps[ui32ImagePosition].pTabPixelOriginal = pImageBuffer;
         free(pImageBuffer);
     }
 
@@ -103,7 +103,7 @@ void    readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP
 	fclose(fpImageFD);
 }
 
-void    readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmaps, uint32_t * pui32NbBitmaps) {
+void    readLabelFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * pstrBitmaps) {
     //Read Image file
     FILE * fpLabelFD = openFile(pcFileLocation);
     

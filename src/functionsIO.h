@@ -13,7 +13,7 @@
 
     //fonction ouvrant un fichier image et renvoyant un tableau de tableau avec la valeur de chaque pixel
     void        readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * strBitmaps);
-    void        readLabelFile(char * pcFileLocation, T_BITMAP * pstrBitmap, uint32_t * pui32NbBitmaps);
+    void        readLabelFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_BITMAP * pstrBitmaps);
     FILE *      openFile (char * pcFileLocation);
     uint32_t    swapEndians (uint32_t ui8num);
     uint32_t    checkMagicNumber (FILE * iImageFD, uint32_t ui8MagicNumber );
