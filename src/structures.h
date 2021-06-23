@@ -67,10 +67,10 @@ typedef struct T_BITMAP
     // TODO : A checker
     double ** pTabPixelOriginal;
     double ** pTabPixelMaxP;
-    uint8_t ui32LargeurOriginal;
-    uint8_t ui32HauteurOriginal;
-    uint8_t ui32LargeurMaxP;
-    uint8_t ui32HauteurMaxP;
+    uint32_t ui32LargeurOriginal;
+    uint32_t ui32HauteurOriginal;
+    uint32_t ui32LargeurMaxP;
+    uint32_t ui32HauteurMaxP;
 } T_BITMAP;
 
 void instancie_neurone(T_NEURONE * , uint16_t );
