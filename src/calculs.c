@@ -44,7 +44,7 @@ void calculerProbaNeuroneCachee(T_NEURONE *neurone, double * tabEntrees, uint16_
 /* Sortie :  la probabilite calculee par le neuronne                                    */
 /*--------------------------------------------------------------------------------------*/
 
-void calculerProbaNeuroneCachee(T_NEURONE *neurone, double * tabEntrees, uint16_t ui16Size) {
+void calculerProbaNeuroneSortie(T_NEURONE *neurone, double * tabEntrees, uint16_t ui16Size) {
     
     //mise à jour de la valeur de sortie du neurone
     neurone->dValeurSortie = moyennePonderee(neurone, tabEntrees, ui16Size);
@@ -63,7 +63,7 @@ double moyennePonderee(T_NEURONE *neurone, double * tabEntrees, uint16_t ui16Siz
     double moyennePonderee = 0;
 
     //pour chaque dendrite
-    for (uint16_t numDendrite = 0 ; (numDendrite < ui16Size) && (numDendrite < neurone->ui16NbDendrites) ; numDendrite++) {
+    for (uint16_t numDendrite = 0 ; numDendrite < ui16Size ; numDendrite++) {
 
         moyennePonderee +=  tabEntrees[numDendrite] * neurone->pdPoids[numDendrite];
     }
