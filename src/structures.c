@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h> // calloc,malloc,free
+#include <unistd.h>
 #include "structures.h"
 
 void instancie_neurone(T_NEURONE * pNeur, uint16_t ui16NbDendrites)
@@ -11,6 +12,14 @@ void instancie_neurone(T_NEURONE * pNeur, uint16_t ui16NbDendrites)
     pNeur->ui16NbDendrites = ui16NbDendrites;
     //printf("Neurone av : %p\n", pNeur->pdPoids);
     pNeur->pdPoids = calloc(ui16NbDendrites, sizeof(double ));
+    if (pNeur->pdPoids == NULL)
+    {
+        perror("Echec de l'instantation des poids d'un neurone");
+    }
+    else
+    {
+        printf("Poids de neurone instanciés\n");
+    }
     //printf("Neurone ap : %p\n", pNeur->pdPoids);
 }
 
@@ -26,7 +35,15 @@ void instancie_couche(T_COUCHE * pCouche, uint16_t ui16NbNeurones)
 {
     pCouche->ui16NbNeurones = ui16NbNeurones;
     pCouche->pNeur = calloc(pCouche->ui16NbNeurones, sizeof(T_NEURONE));
-}
+    if (pCouche->pNeur == NULL)
+    {
+        perror("Echec d'instanciation des neurones d'une couche");
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        printf("Instanciation des neurones d'une couche\n");
+    }}
 
 void libere_couche(T_COUCHE * pCouche)
 {
@@ -39,6 +56,15 @@ T_RSO * instancie_rso(uint8_t ui8NbCouches)
     static T_RSO rso;
     rso.ui8NbCouches = ui8NbCouches;
     rso.pCouche = calloc(rso.ui8NbCouches, sizeof(T_COUCHE));
+    if (rso.pCouche == NULL)
+    {
+        perror("Echec d'instanciation des couches);
+        exit(EXIT_FAILURE);
+    }
+    else
+    {
+        printf("Instanciation des couches\n");
+    }
     return &rso;
 }
 
@@ -109,22 +135,45 @@ T_BITMAP * instancie_bitmap(
     if (pBmp == NULL)
     {
         perror("Echec de l'instanciation d'un T_BITMAP");
+        exit(EXIT_FAILURE);
     }
     else
     {
+        printf("Instanation d'un T_BITMAP");
+        /* initialisation des membres de la structure */
         pBmp->ui32HauteurOriginal = ui32HauteurOrig;
         pBmp->ui32LargeurOriginal = ui32LargeurOrig;
         pBmp->ui32HauteurMaxP = ui32HauteurMaxP;
         pBmp->ui32LargeurMaxP = ui32LargeurMaxP;
         pBmp->pTabPixelOriginal = calloc(pBmp->ui32HauteurOriginal, sizeof (double*));
+        if (pBmp->pTabPixelOriginal == NULL)
+        {
+            perror("Echec de l'instanciation d'un double ** de T_BITMAP");
+            exit(EXIT_FAILURE);
+        }
         for (int i = 0 ; i < pBmp->ui32HauteurOriginal; i++)
         {
             pBmp->pTabPixelOriginal[i] = calloc(pBmp->ui32LargeurOriginal, sizeof(double));
+            if (pBmp->pTabPixelOriginal[i] == NULL)
+            {
+                perror("Echec de l'instanciation d'un double ** de T_BITMAP");
+                exit(EXIT_FAILURE);
+            }
         }
         pBmp->pTabPixelMaxP = calloc(pBmp->ui32HauteurMaxP, sizeof (double*));
+        if (pBmp->pTabPixelMaxP == NULL)
+        {
+            perror("Echec de l'instanciation d'un double ** de T_BITMAP");
+            exit(EXIT_FAILURE);
+        }
         for (int i = 0 ; i < pBmp->ui32HauteurMaxP; i++)
         {
             pBmp->pTabPixelMaxP[i] = calloc(pBmp->ui32LargeurMaxP, sizeof(double));
+            if (pBmp->pTabPixelMaxP[i] == NULL)
+            {
+                perror("Echec de l'instanciation d'un double ** de T_BITMAP");
+                exit(EXIT_FAILURE);
+            }
         }
         pBmp->label = enLabel;
     }
