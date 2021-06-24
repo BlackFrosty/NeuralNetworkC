@@ -181,3 +181,37 @@ uint8_t afficherProbaCouche( T_COUCHE * couche ){
     //printf("\n");
     return neuroneMax;
 }
+
+/*---------------------------------------------------------------------------------------------------------*/
+/*  initPoids                                                                                              */
+/* Fonction : initialiser les poids avec des nombres aléatoires.                                           */
+/* Entree :  pointeur vers la couche                                                                       */
+/* Sortie :                                                                                                */
+/*---------------------------------------------------------------------------------------------------------*/
+void    initPoids ( T_RSO * pReseau ) {
+//pour chaque couche du RSO
+    for (  int numCouche = 0 ; numCouche < pReseau->ui8NbCouches ; numCouche++ ) {
+
+        //pointeur vers la couche courante
+        T_COUCHE * couche = &(pReseau->pCouche[numCouche]);
+
+         //pour chaque neurone de la couche courante
+         // Si numCouche = 0, on commence l'itération à 1 (sans utiliser le neurone de biais), 0 si couche de sortie
+        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ; (numNeurone < couche[numCouche].ui16NbNeurones); numNeurone++ ) {
+            
+            //pour chaque neurone de la couche
+
+            //pointeur vers le neurone courant
+            T_NEURONE * neurone = &couche->pNeur[numNeurone];
+
+            //pour chaque case de poids du neurone courant
+            for( int numPoids = 0; numPoids < neurone->ui16NbDendrites; numPoids++) {
+                
+                //affection d'un nombre random comme poids dans le tableau de poids du neurone courant
+                srand ( time (NULL) );
+                neurone->pdPoids[numPoids] = (double) rand() / RAND_MAX * 2.0 - 1.0; //range {-1 to 1} => (MAX - MIN) - MIN
+            }
+        }
+    }
+
+}
