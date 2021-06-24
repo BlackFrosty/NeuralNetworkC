@@ -6,11 +6,14 @@
 #include "functionsIO.h"
 #include "fonctionsRso.h"
 #include "Util.h"
+#include "calculs.h"
 
 void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
 {
     uint32_t ui32NbBitmap;
     T_STAT stat = {0};
+    double dErreurMoyenne = 0., dErreur;
+    int iOccurences = 1;
 
     printf("paBitmap = %p\n", paBitmap);
     printf("pReseau = %p\n", pReseau);
@@ -22,8 +25,8 @@ void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
     readLabelFile(FIC_LABEL, &ui32NbBitmap, paBitmap);
 
     // Lire le fichier de poids
-    //LirePoids(FIC_POIDS, pReseau);
-    initPoids(pReseau);
+    LirePoids(FIC_POIDS, pReseau);
+    //initPoids(pReseau);
 
     /*for (int i = 0 ; i < 10 ; i++)
     {
@@ -35,7 +38,13 @@ void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
     }*/
     // propager
     //printf("Avant Propager\n");
-    propager(pReseau,paBitmap, ui32NbBitmap, &stat);
+    for (int i = 0 ; i < iOccurences ; i++)
+    {
+        dErreur = propager(pReseau, paBitmap, ui32NbBitmap, &stat);
+        dErreurMoyenne += dErreur;
+        printf("Erreur à l'occurence %d : %lf\n", i+1, dErreur);
+    }
+    printf("Erreur moyenne totale après %d occurences : %lf\n", iOccurences, dErreurMoyenne/iOccurences);
 
 }
 
