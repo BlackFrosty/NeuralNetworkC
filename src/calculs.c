@@ -155,5 +155,5 @@ double logLoss(T_RSO* pReseau, uint8_t neuroneWinner)
         dRes += dValAttendue * log(ptrCoucheSortie->pNeur[numNeurone].dValeurSortie);
     }
 
-    return dRes;
+    return -dRes;
 }
