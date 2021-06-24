@@ -39,6 +39,7 @@ FILE*       openFile (char * pcFileLocation) {
 	    fprintf(stderr, "Impossible d'ouvrir le fichier d'entrees '%s'.\n", pcFileLocation);
 		exit(EXIT_FAILURE);
 	}
+    return f;
 }
 
 //
