@@ -130,7 +130,7 @@ void softmax( T_COUCHE * coucheSortie, double dSommeExp ){
  */
 double errQuadra(T_RSO* pReseau, uint8_t neuroneWinner)
 {
-    double dRes = 0.0, dValAttendue = 0.0;
+    double dRes = 0.0, dValAttendue;
     for(int numNeurone = 0 ; numNeurone < pReseau->pCouche[1].ui16NbNeurones; numNeurone++)
     {
         dValAttendue = (numNeurone == neuroneWinner) ? 1.0 : 0.0;
@@ -146,5 +146,14 @@ double errQuadra(T_RSO* pReseau, uint8_t neuroneWinner)
  */
 double logLoss(T_RSO* pReseau, uint8_t neuroneWinner)
 {
+    double dRes = 0.0;
+    double dValAttendue = 0.0 ;
+    T_COUCHE * ptrCoucheSortie = &(pReseau->pCouche[1]);
+    for (int numNeurone = 0 ; numNeurone < ptrCoucheSortie->ui16NbNeurones; numNeurone++)
+    {
+        dValAttendue = (numNeurone == neuroneWinner) ? 1.0 : 0.0;
+        dRes += dValAttendue * log(ptrCoucheSortie->pNeur[numNeurone].dValeurSortie);
+    }
 
+    return dRes;
 }
