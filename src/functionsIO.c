@@ -92,44 +92,31 @@ T_BITMAP *   readImageFile(char * pcFileLocation, uint32_t * pui32NbBitmaps, T_B
         //printf("%d %d\n", pstrBitmaps[ui32BitmapPosition].ui32HauteurOriginal, pstrBitmaps[ui32BitmapPosition].ui32LargeurOriginal);
     }
     printf("Tout est instancié\n");
-    //Parcourir l'image
+
+    //Parcourir les images
     for (uint32_t ui32ImagePosition = 0; ui32ImagePosition < (* pui32NbBitmaps); ui32ImagePosition++) {
-        //initialize pImageBuffer
-        //double ** pImageBuffer = (double **) malloc (ui32HauteurBitmap * sizeof(double*));
-        // TODO : Instancier la matrice en 2 temps
-        // TODO : Transformer en fonction
         
-        /*for (uint32_t ui32Row = 0; ui32Row < ui32HauteurBitmap; ui32Row++)
-        {
-            pImageBuffer[ui32Row] = (double *) malloc (ui32LargeurBitmap  * sizeof(double));
-        }*/
-        //double ** pImageBuffer = (double **) malloc ((* pui8LargeurBitmap) * (* pui8HauteurBitmap) * sizeof(double));
-        
-        //remplissage du tableau pImageBuffer avec chaque pixels lu       
+        //Pour chaque image, remplissage du tableau pixel par pixel       
         for (uint32_t ui32Row = 0; ui32Row < ui32HauteurBitmap; ui32Row++) {
-                //Lecture d'une entrée de 1 octets
-                for (uint32_t ui32Column = 0; ui32Column < ui32LargeurBitmap; ui32Column++)
-                {
-
-                    if (fread(&ui8Buffer, 1, 1, fpImageFD) != 1)
-                    {
-                        perror("Erreur : La lecture des pixels dans le fichier d'entree a échoué.");
-                        exit(EXIT_FAILURE);
-                    }
-                    else
-                    {
-                        pstrBitmaps[ui32ImagePosition].pTabPixelOriginal[ui32Row][ui32Column] = (double) ui8Buffer;
-                    }
+            //Lecture d'une entrée de 1 octets
+            for (uint32_t ui32Column = 0; ui32Column < ui32LargeurBitmap; ui32Column++) {
+                if (fread(&ui8Buffer, 1, 1, fpImageFD) != 1) {
+                    perror("Erreur : La lecture des pixels dans le fichier d'entree a échoué.");
+                    exit(EXIT_FAILURE);
                 }
-
+                else {
+                    pstrBitmaps[ui32ImagePosition].pTabPixelOriginal[ui32Row][ui32Column] = (double) ui8Buffer;
+                }
+            }
         }
+        
+        //Application de la fonction Maxpooling pour remplir pTabPixelMaxP à partir de l'image lue.
         MaxPooling(&(pstrBitmaps[ui32ImagePosition]));
-        //pstrBitmaps[ui32ImagePosition].pTabPixelOriginal = pImageBuffer;
-        //free(pImageBuffer);
     }
     printf("Avant le fclose\n");
     //fermeture du fichier d'entrées
 	fclose(fpImageFD);
+
     return pstrBitmaps;
 }
 
