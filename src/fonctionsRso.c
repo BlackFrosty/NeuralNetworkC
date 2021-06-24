@@ -41,13 +41,14 @@
 /* Sortie :                                                                                                */
 /*---------------------------------------------------------------------------------------------------------*/
 
-void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap, T_STAT*  stat){
+double propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap, T_STAT*  stat){
 
     //printf("Pointeurs : %p %p\n", reseau, TabEntreeBitmap);
     // 170 = nb de dendrites des neurones de la couche cachee
     double dTabEntreeUnitaire [170] ;
     uint32_t ui32Correct = 0;
     uint8_t  neuroneWinner;
+    double moyenneErreur = 0.0;
     
     // recuperation des pointeurs vers les couches cachee et sortie
     T_COUCHE * coucheCachee = &(reseau->pCouche[0]) ;
@@ -108,10 +109,14 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
             printf("Le réseau a déterminé %d\n", neuroneWinner);
         }*/
         majStats(stat, coucheSortie->pNeur[neuroneWinner].dValeurSortie, neuroneWinner, bitmapCourant.label);
-
+        /*printf("Valeur logLoss = %lf\n", logLoss(reseau, neuroneWinner));
+        printf("Valeur errQuadra = %lf\n", errQuadra(reseau, neuroneWinner));
+        printf("\n");*/
+        moyenneErreur += logLoss(reseau, neuroneWinner);
     }
     printf("Nombre de résultats corrects / tests totaux : %d/%d soit %f%%\n", ui32Correct, ui32NbBitmap, ui32Correct/ (double) ui32NbBitmap * 100);
     afficherStats(*stat);
+    return moyenneErreur / ui32NbBitmap;
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -176,7 +181,7 @@ uint8_t labelPredit(T_COUCHE * couche ){
     uint8_t neuroneMax = 0;
     double valMax = 0.0;
     for ( uint8_t cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
-        printf("Probabilite calculee par le neurone %d : %.4f\n", cpt, couche->pNeur[cpt].dValeurSortie ) ;
+        //printf("Probabilite calculee par le neurone %d : %.4f\n", cpt, couche->pNeur[cpt].dValeurSortie ) ;
         if (couche->pNeur[cpt].dValeurSortie > valMax)
         {
             valMax = couche->pNeur[cpt].dValeurSortie;
@@ -184,7 +189,7 @@ uint8_t labelPredit(T_COUCHE * couche ){
         }
     }
     //printf("Probabilite max calculee par le neurone %d : %.4f\n", neuroneMax, valMax ) ;
-    printf("\n");
+    //printf("\n");
     return neuroneMax;
 }
 
