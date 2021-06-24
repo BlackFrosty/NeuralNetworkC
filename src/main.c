@@ -38,7 +38,7 @@ int main(int argc, char ** argv)
     pReseau = init_rso_neurones(NB_COUCHES);
     // Apprentissage
     entrainer(pReseau, paBitmap);
-
+    printf("Avec retropropagation\n");
 
     //libere_cascade(pReseau);
 }
