@@ -8,24 +8,20 @@
 
 #include "Util.h"
 
-// TODO : Utiliser le bitmap = FAIT 
-//void MaxPooling (double adTabPixel[NB_ELEMENTS_BMP][NB_ELEMENTS_BMP], double adTabResultat[NB_ELEMENT_MAX_POOLING][NB_ELEMENT_MAX_POOLING]){
 void MaxPooling (T_BITMAP * ptrBitmap){
-    int x = 0 ;
-    int y = 0 ;
+    int x = 0 ; //ligne du tableau de MaxPooling
+    int y = 0 ; //colonne du tableau de MaxPooling
 
-    for (int i = 1 ; i < ptrBitmap->ui32HauteurOriginal - 1 ; i+=2, x++, y=0) {
-        for (int j=  1 ; j < ptrBitmap->ui32LargeurOriginal - 1 ; j+=2, y++){
-
+    for (int i = 1 ; i < ptrBitmap->ui32HauteurOriginal - 1 ; i+=2, x++, y=0) 
+    {
+        for (int j=  1 ; j < ptrBitmap->ui32LargeurOriginal - 1 ; j+=2, y++)
+        {
             ptrBitmap->pTabPixelMaxP[x][y] = fmax(ptrBitmap->pTabPixelOriginal[i][j], ptrBitmap->pTabPixelOriginal[i+1][j]) ;
             
             if (ptrBitmap->pTabPixelMaxP[x][y] < fmax(ptrBitmap->pTabPixelOriginal[i][j+1],ptrBitmap->pTabPixelOriginal[i+1][j+1])) 
             {
                 ptrBitmap->pTabPixelMaxP[x][y] = fmax(ptrBitmap->pTabPixelOriginal[i][j+1],ptrBitmap->pTabPixelOriginal[i+1][j+1] );
             }//if
-            /*printf("%lf, (%lf %lf %lf %lf)\n", ptrBitmap->pTabPixelMaxP[x][y],
-                   ptrBitmap->pTabPixelOriginal[i][j], ptrBitmap->pTabPixelOriginal[i][j+1],
-                   ptrBitmap->pTabPixelOriginal[i+1][j], ptrBitmap->pTabPixelOriginal[i+1][j+1]);*/
         }//for
     }//for
 
@@ -44,8 +40,8 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
 		exit(EXIT_FAILURE);
 	}//if
 
-    int cptValLues = 0;
-    char ligne [MAX_TAILLE_LIGNE] = "";
+    int cptValLues = 0; //compteur du nombre de poids lus
+    char ligne [MAX_TAILLE_LIGNE] = ""; //une ligne du fichier poids correspond à un poids et la taille max de cette ligne est 15
 
     //lire tableau
 
@@ -77,13 +73,8 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
                     fprintf(stderr, "Impossible de lire le poids à la ligne %d.\n", cptValLues);
 		            exit(EXIT_FAILURE);
                  }
-                 /*else
-                 {
-                     printf("ligne %s, %lf\n", ligne, neurone->pdPoids[numPoids]);
-                 }*/ //if
-                //printf("cptValLues = %d\n", cptValLues);
             }//for
-            //printf("cptValLues For = %d\n", cptValLues);
+
         }//for
     }//for
     printf("cptValLues Final = %d\n", cptValLues);
@@ -104,6 +95,7 @@ void afficherImage(T_BITMAP * elem) {
 
     printf("\n");
 
+    //affichage de l'image récupérée dans fichier image et enrengistrée dans le BITMAP
     for (int i = 0; i < elem->ui32HauteurOriginal; i++) {
         for (int j = 0; j < elem->ui32LargeurOriginal; j++) {
             if (elem->pTabPixelOriginal[i][j] > (double)0) {
@@ -116,6 +108,10 @@ void afficherImage(T_BITMAP * elem) {
     }//for
     printf("\n");
 
+    // affichage du Label récupérer dans le fichier LAbel et enrengistré dans le BITMAP
+    printf("Label : %d\n", elem->label);
+
+    //affichage de l'image après le MaxPooling enrengistrée dans le BITMAP
     /*for (int i = 0; i < elem->ui32HauteurMaxP; i++) {
         for (int j = 0; j < elem->ui32LargeurMaxP; j++) {
             if (elem->pTabPixelMaxP[i][j] > (double)0) {
@@ -128,5 +124,4 @@ void afficherImage(T_BITMAP * elem) {
     }//for
     printf("\n");*/
 
-    printf("Label : %d\n", elem->label);
 }//afficherImage
