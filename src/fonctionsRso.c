@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <math.h>
+#include <time.h>
 
 /*---------------------------------------------*/
 /*     INCLUDE PERSONNELS   - prototypes       */
