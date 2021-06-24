@@ -41,7 +41,7 @@
 /* Sortie :                                                                                                */
 /*---------------------------------------------------------------------------------------------------------*/
 
-void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap ){
+void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap, T_STAT*  stat){
 
     //printf("Pointeurs : %p %p\n", reseau, TabEntreeBitmap);
     // 170 = nb de dendrites des neurones de la couche cachee
@@ -104,11 +104,14 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
         }
         else
         {
-            afficherImage(&bitmapCourant, 3);
+            afficherImage(&bitmapCourant, 1);
             printf("Le réseau a déterminé %d\n", neuroneWinner);
         }
+        majStats(stat, coucheSortie->pNeur[neuroneWinner].dValeurSortie, neuroneWinner, bitmapCourant.label);
+
     }
     printf("Nombre de résultats corrects / tests totaux : %d/%d soit %f%%\n", ui32Correct, ui32NbBitmap, ui32Correct/ (double) ui32NbBitmap * 100);
+    afficherStats(*stat);
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
@@ -195,19 +198,19 @@ void    initPoids ( T_RSO * pReseau ) {
 
         //pointeur vers la couche courante
         T_COUCHE * couche = &(pReseau->pCouche[numCouche]);
-
+        //printf("Pointeur couche : %p, %d\n", couche, couche->ui16NbNeurones);
          //pour chaque neurone de la couche courante
          // Si numCouche = 0, on commence l'itération à 1 (sans utiliser le neurone de biais), 0 si couche de sortie
-        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ; (numNeurone < couche[numCouche].ui16NbNeurones); numNeurone++ ) {
+        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ; (numNeurone < couche->ui16NbNeurones); numNeurone++ ) {
             
             //pour chaque neurone de la couche
 
             //pointeur vers le neurone courant
             T_NEURONE * neurone = &couche->pNeur[numNeurone];
+            //printf("Pointeur neurone : %p, %d\n", neurone, numNeurone);
 
             //pour chaque case de poids du neurone courant
             for( int numPoids = 0; numPoids < neurone->ui16NbDendrites; numPoids++) {
-                
                 //affection d'un nombre random comme poids dans le tableau de poids du neurone courant
                 srand ( time (NULL) );
                 neurone->pdPoids[numPoids] = (double) rand() / RAND_MAX * 2.0 - 1.0; //range {-1 to 1} => (MAX - MIN) - MIN
