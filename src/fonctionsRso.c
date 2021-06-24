@@ -92,9 +92,9 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
 
 
 
-        //printf("Avant afficherProbaCouche\n");
-        neuroneWinner = afficherProbaCouche( coucheSortie ) ;
-        //printf("Après afficherProbaCouche\n");
+        //printf("Avant labelPredit\n");
+        neuroneWinner = labelPredit(coucheSortie) ;
+        //printf("Après labelPredit\n");
 
         //printf("Label d'entrainement : %d\n\n ", bitmapCourant.label);
         if (neuroneWinner == bitmapCourant.label)
@@ -160,12 +160,12 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
 }
 
 /*---------------------------------------------------------------------------------------------------------*/
-/*  afficherProbaCouche                                                                                    */
+/*  labelPredit                                                                                    */
 /* Fonction : affiche les poba calculee par les neurones sur une couche                                    */
 /* Entree :  pointeur vers la couche                                                                       */
 /* Sortie :                                                                                                */
 /*---------------------------------------------------------------------------------------------------------*/
-uint8_t afficherProbaCouche( T_COUCHE * couche ){
+uint8_t labelPredit(T_COUCHE * couche ){
 
     uint8_t neuroneMax = 0;
     double valMax = 0.0;
