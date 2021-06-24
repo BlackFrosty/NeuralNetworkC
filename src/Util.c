@@ -54,7 +54,7 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
          //pour chaque neurone de la couche courante
          // Si numCouche = 0, on commence l'itération à 1 (sans utiliser le neurone de biais), 0 si couche de sortie
         for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ;
-                (numNeurone < couche[numCouche].ui16NbNeurones);
+                (numNeurone < couche->ui16NbNeurones);
                 numNeurone++ )
         {
             //pour chaque neurone de la couche
