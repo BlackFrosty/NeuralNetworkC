@@ -47,7 +47,7 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
     // 170 = nb de dendrites des neurones de la couche cachee
     double dTabEntreeUnitaire [170] ;
     uint32_t ui32Correct = 0;
-    uint8_t  neuroneWinner = 0;
+    uint8_t  neuroneWinner;
     
     // recuperation des pointeurs vers les couches cachee et sortie
     T_COUCHE * coucheCachee = &(reseau->pCouche[0]) ;
