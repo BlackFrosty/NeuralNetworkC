@@ -168,7 +168,7 @@ void afficherImage(T_BITMAP * elem, uint8_t ui8Mode) {
     }
 }//afficherImage
 
-void majStats(T_STATS *stats, double proba , enumLabel labelRecherche, enumLabel labelEffectif ) {
+void majStats(T_STAT *stats, double proba , enumLabel labelRecherche, enumLabel labelEffectif ) {
 
     //incrémentation du nombre d'éléments analysés
     stats->nbElements++;
@@ -213,7 +213,7 @@ void majStats(T_STATS *stats, double proba , enumLabel labelRecherche, enumLabel
 
 }//majStats
 
-void afficherStats(T_STATS stats) {
+void afficherStats(T_STAT stats) {
 
     printf("\nPrecision  = %.0lf%%, Rappel = %.0lf%%, nb Vrais positifs = %.0lf, nb Faux positifs = %.0lf, nb Vrais negatifs = %.0lf, nb Faux negatifs = %.0lf\n"
         , stats.precision * 100
