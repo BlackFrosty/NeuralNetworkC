@@ -17,15 +17,20 @@
  * instancie_neurone
  * Crée le tableau de poids propre au neurone
  * @param pNeur : Pointeur sur un neurone
- * @param ui16NbDendrites : Nombre de dendrites d'entrées (et donc de poids correspondant à instancier)
+ * @param ui16NbDendrites : Nombre de dendrites d'entrées (et donc de poids + gradients correspondants à instancier)
  */
 void instancie_neurone(T_NEURONE * pNeur, uint16_t ui16NbDendrites)
 {
     pNeur->ui16NbDendrites = ui16NbDendrites;
-    pNeur->pdPoids = calloc(ui16NbDendrites, sizeof(double ));
+    pNeur->pdPoids = calloc(pNeur->ui16NbDendrites, sizeof(double ));
     if (pNeur->pdPoids == NULL)
     {
         perror("Echec de l'instantation des poids d'un neurone");
+    }
+    pNeur->pdGradient = calloc(pNeur->ui16NbDendrites, sizeof(double ));
+    if (pNeur->pdGradient == NULL)
+    {
+        perror("Echec de l'instantation des gradients d'un neurone");
     }
 }
 

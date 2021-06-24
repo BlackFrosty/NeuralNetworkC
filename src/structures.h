@@ -25,14 +25,14 @@
  *   - un pointeur vers un tableau de poids synaptiques
  *   - le nombre de dendrites
  *   - la valeur de sortie du neurone
- *   - la valeur de gradient
+ *   - un pointeur vers un tableau de gradients
  */
 typedef struct T_NEURONE {
     /* tableau de poids */
     double * pdPoids;
+    double * pdGradient;
     uint16_t ui16NbDendrites;
     double dValeurSortie;
-    double dGradient;
     double (*fActication)(double);
     double (*fDerivActivation)(double);
 } T_NEURONE;
