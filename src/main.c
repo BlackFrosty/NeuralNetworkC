@@ -10,6 +10,8 @@
 void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
 {
     uint32_t ui32NbBitmap;
+    T_STAT stat = {0};
+
     printf("paBitmap = %p\n", paBitmap);
     printf("pReseau = %p\n", pReseau);
 
@@ -20,11 +22,20 @@ void entrainer(T_RSO* pReseau , T_BITMAP * paBitmap)
     readLabelFile(FIC_LABEL, &ui32NbBitmap, paBitmap);
 
     // Lire le fichier de poids
-    LirePoids(FIC_POIDS, pReseau);
+    //LirePoids(FIC_POIDS, pReseau);
+    initPoids(pReseau);
 
+    /*for (int i = 0 ; i < 10 ; i++)
+    {
+        for (int j = 0 ; j < 66 ; j++)
+        {
+            printf("Poids(%d)(%d) : %lf\n", i, j, pReseau->pCouche[1].pNeur[i].pdPoids[j]);
+        }
+        printf("\n");
+    }*/
     // propager
-    printf("Avant Propager\n");
-    propager(pReseau,paBitmap, ui32NbBitmap);
+    //printf("Avant Propager\n");
+    propager(pReseau,paBitmap, ui32NbBitmap, &stat);
 
 }
 

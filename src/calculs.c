@@ -122,4 +122,29 @@ void softmax( T_COUCHE * coucheSortie, double dSommeExp ){
         (coucheSortie->pNeur[i]).dValeurSortie = exp( (coucheSortie->pNeur[i]).dValeurSortie ) / dSommeExp ;
     }
 }
+/**
+ * errQuadra : Calcul de l'erreur quadratique
+ * @param pReseau
+ * @param neuroneWinner
+ * @return l'erreur quadratique
+ */
+double errQuadra(T_RSO* pReseau, uint8_t neuroneWinner)
+{
+    double dRes = 0.0, dValAttendue = 0.0;
+    for(int numNeurone = 0 ; numNeurone < pReseau->pCouche[1].ui16NbNeurones; numNeurone++)
+    {
+        dValAttendue = (numNeurone == neuroneWinner) ? 1.0 ; 0.0;
+        dRes += pow(pReseau->pCouche[1].pNeur[numNeurone].dValeurSortie - dValAttendue, 2);
+    }
+    return dRes;
+}
+/**
+ * 
+ * @param pReseau
+ * @param neuroneWinner
+ * @return
+ */
+double logLoss(T_RSO* pReseau, uint8_t neuroneWinner)
+{
 
+}

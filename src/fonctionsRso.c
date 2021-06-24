@@ -102,11 +102,11 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
         {
             ui32Correct++;
         }
-        else
+        /*else
         {
-            afficherImage(&bitmapCourant, 1);
+            //afficherImage(&bitmapCourant, 1);
             printf("Le réseau a déterminé %d\n", neuroneWinner);
-        }
+        }*/
         majStats(stat, coucheSortie->pNeur[neuroneWinner].dValeurSortie, neuroneWinner, bitmapCourant.label);
 
     }
@@ -127,7 +127,8 @@ void calculerProbaCoucheCachee( double * dTabEntree, T_COUCHE *coucheCachee ){
     
     // TODO : Cas des neurone normaux
     for ( uint16_t cptNeurone = 1 ; cptNeurone < coucheCachee->ui16NbNeurones ; cptNeurone++ ){
-        calculerProbaNeuroneCachee( &coucheCachee->pNeur[cptNeurone], dTabEntree, coucheCachee->pNeur[cptNeurone].ui16NbDendrites) ;
+        calculerProbaNeuroneCachee( &coucheCachee->pNeur[cptNeurone],
+                                    dTabEntree, coucheCachee->pNeur[cptNeurone].ui16NbDendrites) ;
     }
 
     
@@ -152,7 +153,8 @@ void calculerProbaCoucheSortie( T_COUCHE *coucheCachee, T_COUCHE *coucheSortie )
     // aplication de la fonction d activation sur chaque neurone
     for ( uint8_t cptNeurone = 0 ; cptNeurone < coucheSortie->ui16NbNeurones ; cptNeurone++ ){
 
-        calculerProbaNeuroneSortie( &coucheSortie->pNeur[cptNeurone], dTabEntree,  coucheSortie->pNeur[cptNeurone].ui16NbDendrites) ;
+        calculerProbaNeuroneSortie( &coucheSortie->pNeur[cptNeurone],
+                                    dTabEntree,  coucheSortie->pNeur[cptNeurone].ui16NbDendrites) ;
     }
     
     // calcul de la somme des exponentielles des valeurs de sortie de la couche de sortie
@@ -174,7 +176,7 @@ uint8_t labelPredit(T_COUCHE * couche ){
     uint8_t neuroneMax = 0;
     double valMax = 0.0;
     for ( uint8_t cpt = 0 ; cpt < couche->ui16NbNeurones ; cpt++ ){
-        //printf("Probabilite calculee par le neurone %d : %.4f\n", cpt, couche->pNeur[cpt].dValeurSortie ) ;
+        printf("Probabilite calculee par le neurone %d : %.4f\n", cpt, couche->pNeur[cpt].dValeurSortie ) ;
         if (couche->pNeur[cpt].dValeurSortie > valMax)
         {
             valMax = couche->pNeur[cpt].dValeurSortie;
@@ -182,7 +184,7 @@ uint8_t labelPredit(T_COUCHE * couche ){
         }
     }
     //printf("Probabilite max calculee par le neurone %d : %.4f\n", neuroneMax, valMax ) ;
-    //printf("\n");
+    printf("\n");
     return neuroneMax;
 }
 
@@ -194,6 +196,7 @@ uint8_t labelPredit(T_COUCHE * couche ){
 /*---------------------------------------------------------------------------------------------------------*/
 void    initPoids ( T_RSO * pReseau ) {
 //pour chaque couche du RSO
+    srand ( (unsigned  int)time (NULL) );
     for (  int numCouche = 0 ; numCouche < pReseau->ui8NbCouches ; numCouche++ ) {
 
         //pointeur vers la couche courante
@@ -201,7 +204,11 @@ void    initPoids ( T_RSO * pReseau ) {
         //printf("Pointeur couche : %p, %d\n", couche, couche->ui16NbNeurones);
          //pour chaque neurone de la couche courante
          // Si numCouche = 0, on commence l'itération à 1 (sans utiliser le neurone de biais), 0 si couche de sortie
-        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ; (numNeurone < couche->ui16NbNeurones); numNeurone++ ) {
+        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ;
+            (numNeurone < couche->ui16NbNeurones);
+            numNeurone++
+            )
+        {
             
             //pour chaque neurone de la couche
 
@@ -212,8 +219,8 @@ void    initPoids ( T_RSO * pReseau ) {
             //pour chaque case de poids du neurone courant
             for( int numPoids = 0; numPoids < neurone->ui16NbDendrites; numPoids++) {
                 //affection d'un nombre random comme poids dans le tableau de poids du neurone courant
-                srand ( time (NULL) );
-                neurone->pdPoids[numPoids] = (double) rand() / RAND_MAX * 2.0 - 1.0; //range {-1 to 1} => (MAX - MIN) - MIN
+
+                neurone->pdPoids[numPoids] = (double) rand() / RAND_MAX * 3.0 - 1.0; //range {-1 to 1} => (MAX - MIN) - MIN
             }
         }
     }

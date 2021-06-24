@@ -31,5 +31,7 @@ double sigmoide ( double ) ;
 double derivSigmoide( double ) ;
 double sommeExpProba( T_COUCHE * ) ;
 void softmax( T_COUCHE *, double ) ;
+double errQuadra(T_RSO*, uint8_t);
+double logLoss(T_RSO*, uint8_t);
 
 #endif /* calculs_h */
