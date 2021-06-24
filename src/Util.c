@@ -14,8 +14,8 @@ void MaxPooling (T_BITMAP * ptrBitmap){
     int x = 0 ;
     int y = 0 ;
 
-    for (int i = 1 ; i < NB_ELEMENTS_BMP - 1 ; i+=2, x++, y=0) {
-        for (int j=  1 ; j < NB_ELEMENTS_BMP - 1 ; j+=2, y++){
+    for (int i = 1 ; i < ptrBitmap->ui32HauteurOriginal - 1 ; i+=2, x++, y=0) {
+        for (int j=  1 ; j < ptrBitmap->ui32LargeurOriginal - 1 ; j+=2, y++){
 
             ptrBitmap->pTabPixelMaxP[x][y] = fmax(ptrBitmap->pTabPixelOriginal[i][j], ptrBitmap->pTabPixelOriginal[i+1][j]) ;
             
@@ -26,10 +26,7 @@ void MaxPooling (T_BITMAP * ptrBitmap){
             /*printf("%lf, (%lf %lf %lf %lf)\n", ptrBitmap->pTabPixelMaxP[x][y],
                    ptrBitmap->pTabPixelOriginal[i][j], ptrBitmap->pTabPixelOriginal[i][j+1],
                    ptrBitmap->pTabPixelOriginal[i+1][j], ptrBitmap->pTabPixelOriginal[i+1][j+1]);*/
-
-
         }//for
-
     }//for
 
 }// fin MAxPooling
@@ -59,24 +56,26 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
         T_COUCHE * couche = &(pReseau->pCouche[numCouche]);
 
          //pour chaque neurone de la couche courante
-         // TODO : Neurone de biais ? A vérifier ou faire 2 boucles (1 par couche)
-        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ; (numNeurone < couche[numCouche].ui16NbNeurones)
-            ;         numNeurone++ ) {//pour chaque neurone de la couche
+         // Si numCouche = 0, on commence l'itération à 1 (sans utiliser le neurone de biais), 0 si couche de sortie
+        for (  int numNeurone = (pReseau->ui8NbCouches -1 == numCouche) ? 0 : 1 ;
+                (numNeurone < couche[numCouche].ui16NbNeurones);
+                numNeurone++ )
+        {
+            //pour chaque neurone de la couche
 
             //pointeur vers le neurone courant
             T_NEURONE * neurone = &couche->pNeur[numNeurone];
 
             //pour chaque case de poids du neurone courant
-            for( int numPoids = 0; numPoids < neurone->ui16NbDendrites && fgets(ligne, MAX_TAILLE_LIGNE, fpFicIn) != NULL ; numPoids++, cptValLues++) {
-
-
-
+            for( int numPoids = 0;
+                numPoids < neurone->ui16NbDendrites && fgets(ligne, MAX_TAILLE_LIGNE, fpFicIn) != NULL ;
+                numPoids++, cptValLues++)
+            {
                 //tentative de lecture d'un poids et d'affection du poids lu dans le tableau de poids du neurone courant
-                 if (sscanf(ligne, "%lf", &neurone->pdPoids[numPoids]) != 1) {
-
+                 if (sscanf(ligne, "%lf", &neurone->pdPoids[numPoids]) != 1)
+                 {
                     fprintf(stderr, "Impossible de lire le poids à la ligne %d.\n", cptValLues);
 		            exit(EXIT_FAILURE);
-
                  }
                  /*else
                  {
@@ -97,12 +96,16 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
 }//lirePoids()
 
 //fonction d'affichage d'une image d'un bitmap
+/**
+ * afficherImage : Affiche sommairement le contenu de tableaux de pixels, ainsi que le label associé, si défini
+ * @param elem : Pointeur sur T_BITMAP
+ */
 void afficherImage(T_BITMAP * elem) {
 
     printf("\n");
 
-    for (int i = 0; i < 28; i++) {
-        for (int j = 0; j < 28; j++) {
+    for (int i = 0; i < elem->ui32HauteurOriginal; i++) {
+        for (int j = 0; j < elem->ui32LargeurOriginal; j++) {
             if (elem->pTabPixelOriginal[i][j] > (double)0) {
                 printf("*");
             } else {
@@ -113,8 +116,8 @@ void afficherImage(T_BITMAP * elem) {
     }//for
     printf("\n");
 
-    /*for (int i = 0; i < 13; i++) {
-        for (int j = 0; j < 13; j++) {
+    /*for (int i = 0; i < elem->ui32HauteurMaxP; i++) {
+        for (int j = 0; j < elem->ui32LargeurMaxP; j++) {
             if (elem->pTabPixelMaxP[i][j] > (double)0) {
                 printf("*");
             } else {
