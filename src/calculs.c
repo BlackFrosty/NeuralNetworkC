@@ -133,13 +133,13 @@ double errQuadra(T_RSO* pReseau, uint8_t neuroneWinner)
     double dRes = 0.0, dValAttendue = 0.0;
     for(int numNeurone = 0 ; numNeurone < pReseau->pCouche[1].ui16NbNeurones; numNeurone++)
     {
-        dValAttendue = (numNeurone == neuroneWinner) ? 1.0 ; 0.0;
+        dValAttendue = (numNeurone == neuroneWinner) ? 1.0 : 0.0;
         dRes += pow(pReseau->pCouche[1].pNeur[numNeurone].dValeurSortie - dValAttendue, 2);
     }
     return dRes;
 }
 /**
- * 
+ *
  * @param pReseau
  * @param neuroneWinner
  * @return
