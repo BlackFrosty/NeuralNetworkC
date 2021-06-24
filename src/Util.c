@@ -90,38 +90,80 @@ int LirePoids(char * szNomFicIn ,  T_RSO * pReseau) {
 /**
  * afficherImage : Affiche sommairement le contenu de tableaux de pixels, ainsi que le label associé, si défini
  * @param elem : Pointeur sur T_BITMAP
+ * @param ui8Mode : Somme de modes d'affichage : 4 (Affiche Original), 2 (Affiche MaxPool), 1 (Affiche Label) = 7 max
  */
-void afficherImage(T_BITMAP * elem) {
+void afficherImage(T_BITMAP * elem, uint8_t ui8Mode) {
 
-    printf("\n");
+    _Bool bAfficheOriginal = 0, bAfficheMaxP = 0, bAfficheLabel = 0;
 
-    //affichage de l'image récupérée dans fichier image et enrengistrée dans le BITMAP
-    for (int i = 0; i < elem->ui32HauteurOriginal; i++) {
-        for (int j = 0; j < elem->ui32LargeurOriginal; j++) {
-            if (elem->pTabPixelOriginal[i][j] > (double)0) {
-                printf("*");
-            } else {
-                printf(" ");
-            }//if
+    switch (ui8Mode)
+    {
+        case 7:
+            bAfficheOriginal = 1;
+            bAfficheMaxP = 1;
+            bAfficheLabel = 1;
+            break;
+        case 6:
+            bAfficheOriginal = 1;
+            bAfficheMaxP = 1;
+            break;
+        case 5:
+            bAfficheOriginal = 1;
+            bAfficheLabel = 1;
+            break;
+        case 4:
+            bAfficheOriginal = 1;
+            break;
+        case 3:
+            bAfficheMaxP = 1;
+            bAfficheLabel = 1;
+            break;
+        case 2:
+            bAfficheMaxP = 1;
+            break;
+        case 1:
+            bAfficheLabel = 1;
+            break;
+        default:
+            perror("AfficheImage : Erreur de mode");
+    }
+
+    if (bAfficheOriginal)
+    {
+        printf("\n");
+
+        //affichage de l'image récupérée dans fichier image et enrengistrée dans le BITMAP
+        for (int i = 0; i < elem->ui32HauteurOriginal; i++) {
+            for (int j = 0; j < elem->ui32LargeurOriginal; j++) {
+                if (elem->pTabPixelOriginal[i][j] > (double) 0) {
+                    printf("*");
+                } else {
+                    printf(" ");
+                }//if
+            }//for
+            printf("\n");
         }//for
         printf("\n");
-    }//for
-    printf("\n");
+    }
 
-    // affichage du Label récupérer dans le fichier LAbel et enrengistré dans le BITMAP
-    printf("Label : %d\n", elem->label);
-
-    //affichage de l'image après le MaxPooling enrengistrée dans le BITMAP
-    /*for (int i = 0; i < elem->ui32HauteurMaxP; i++) {
-        for (int j = 0; j < elem->ui32LargeurMaxP; j++) {
-            if (elem->pTabPixelMaxP[i][j] > (double)0) {
-                printf("*");
-            } else {
-                printf(".");
-            }//if
+    if (bAfficheMaxP)
+    {
+        //affichage de l'image après le MaxPooling enrengistrée dans le BITMAP
+        for (int i = 0; i < elem->ui32HauteurMaxP; i++) {
+            for (int j = 0; j < elem->ui32LargeurMaxP; j++) {
+                if (elem->pTabPixelMaxP[i][j] > (double)0) {
+                    printf("*");
+                } else {
+                    printf(" ");
+                }//if
+            }//for
+            printf("\n");
         }//for
         printf("\n");
-    }//for
-    printf("\n");*/
-
+    }
+    if (bAfficheLabel)
+    {
+        // affichage du Label récupérer dans le fichier LAbel et enrengistré dans le BITMAP
+        printf("Label : %d\n", elem->label);
+    }
 }//afficherImage

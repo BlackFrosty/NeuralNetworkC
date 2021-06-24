@@ -103,7 +103,7 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
         }
         else
         {
-            afficherImage(&bitmapCourant);
+            afficherImage(&bitmapCourant, 3);
             printf("Le réseau a déterminé %d\n", neuroneWinner);
         }
     }
