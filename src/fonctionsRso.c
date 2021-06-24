@@ -42,7 +42,7 @@
 
 void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap ){
 
-    printf("Pointeurs : %p %p\n", reseau, TabEntreeBitmap);
+    //printf("Pointeurs : %p %p\n", reseau, TabEntreeBitmap);
     // 170 = nb de dendrites des neurones de la couche cachee
     double dTabEntreeUnitaire [170] ;
     uint32_t ui32Correct = 0;
@@ -100,6 +100,11 @@ void propager( T_RSO * reseau, T_BITMAP * TabEntreeBitmap, uint32_t ui32NbBitmap
         if (neuroneWinner == bitmapCourant.label)
         {
             ui32Correct++;
+        }
+        else
+        {
+            afficherImage(&bitmapCourant);
+            printf("Le réseau a déterminé %d\n", neuroneWinner);
         }
     }
     printf("Nombre de résultats corrects / tests totaux : %d/%d soit %f%%\n", ui32Correct, ui32NbBitmap, ui32Correct/ (double) ui32NbBitmap * 100);
